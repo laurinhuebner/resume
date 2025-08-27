@@ -1,245 +1,217 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Lebenslauf – Laurin Hübner</title>
-  <meta name="description" content="Lebenslauf / Portfolio von Laurin Hübner" />
   <style>
     :root {
       --bg: #0b0f14;
       --card: #121821;
-      --muted: #8aa0b7;
       --text: #eaf2fb;
+      --muted: #8aa0b7;
       --accent: #4ea7ff;
-      --chip: #1b2430;
       --border: #1f2937;
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
-      --radius: 16px;
-      --radius-sm: 10px;
+      --chip: #1b2430;
     }
     body.light {
       --bg: #f7f9fc;
       --card: #ffffff;
-      --muted: #5c6b7a;
       --text: #1a1a1a;
+      --muted: #5c6b7a;
       --accent: #0066cc;
-      --chip: #e4e9f0;
       --border: #d1d9e0;
-      --shadow: 0 5px 15px rgba(0,0,0,.1);
+      --chip: #e4e9f0;
     }
-    * { box-sizing: border-box; }
-    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif; transition: background .3s, color .3s; }
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    .container { max-width: 980px; margin: 0 auto; padding: 24px; }
-    header { display: grid; grid-template-columns: 120px 1fr auto; gap: 20px; align-items: center; margin-top: 28px; }
-    .avatar { width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(145deg, #1a2230, #0b0f14); display: grid; place-items: center; box-shadow: var(--shadow); overflow: hidden; }
-    body.light .avatar { background: #dde3eb; }
-    .avatar span { font-size: 44px; color: var(--accent); }
-    .headline h1 { margin: 0 0 8px 0; font-size: 34px; letter-spacing: .2px; }
-    .headline p { margin: 0; color: var(--muted); }
-    .chips { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 8px; }
-    .chip { background: var(--chip); padding: 6px 10px; border-radius: 999px; border: 1px solid var(--border); font-size: 13px; color: var(--text); }
-    .grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 28px; }
-    @media (min-width: 900px) { .grid { grid-template-columns: 1fr 1fr; } }
-    .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); transition: background .3s, color .3s; }
-    .card h2 { margin: 0 0 12px 0; font-size: 20px; letter-spacing: .3px; }
-    .item { margin-bottom: 16px; }
-    .item:last-child { margin-bottom: 0; }
-    .row { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: baseline; }
-    .role { font-weight: 600; }
-    .date { color: var(--muted); white-space: nowrap; }
-    .org { font-weight: 700; }
-    .sub { color: var(--muted); font-size: 14px; }
-    ul.desc { margin: 8px 0 0 18px; color: var(--muted); }
-    .skills { display: flex; flex-wrap: wrap; gap: 8px; }
-    .skill { background: var(--chip); border: 1px solid var(--border); padding: 10px 12px; border-radius: var(--radius-sm); }
-    footer { text-align: center; color: var(--muted); margin: 30px 0 10px; font-size: 14px; }
-    .contact { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
-    .contact a, .contact span { background: var(--chip); border: 1px solid var(--border); padding: 8px 10px; border-radius: 10px; }
-    .btn { display: inline-block; margin-top: 12px; padding: 10px 16px; background: var(--accent); color: #fff; border-radius: 8px; font-weight: 600; }
-    .actions { display: flex; gap: 8px; }
-    .theme-toggle, .lang-toggle { cursor: pointer; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--chip); font-size: 14px; }
+    body {
+      margin: 0; font-family: system-ui, sans-serif;
+      background: var(--bg); color: var(--text);
+      transition: background .3s, color .3s;
+    }
+    header { text-align: center; padding: 30px 10px; }
+    header h1 { margin: 0; font-size: 32px; }
+    header p { margin: 4px 0; color: var(--muted); }
+    header a { color: var(--accent); text-decoration: none; }
+    main { max-width: 900px; margin: auto; padding: 20px; }
+    section { background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 20px; margin-bottom: 20px;
+      box-shadow: 0 6px 18px rgba(0,0,0,.3); }
+    section h2 { margin-top: 0; display: flex; align-items: center; font-size: 20px; }
+    section h2 span { margin-right: 8px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .chip { background: var(--chip); border-radius: 999px; padding: 6px 12px; font-size: 13px; }
+    .timeline { border-left: 2px solid var(--accent); margin-left: 10px; padding-left: 20px; }
+    .entry { margin-bottom: 18px; }
+    .entry h3 { margin: 0; font-size: 16px; }
+    .entry p { margin: 2px 0; color: var(--muted); }
+    .btn {
+      display: inline-block; margin: 10px 5px;
+      padding: 10px 18px; border-radius: 10px;
+      background: var(--accent); color: #fff; font-weight: 600; text-decoration: none;
+    }
+    footer { text-align: center; padding: 20px; font-size: 13px; color: var(--muted); }
+    .actions { text-align: center; margin-bottom: 20px; }
+    .toggle { margin-left: 15px; cursor: pointer; font-size: 14px; color: var(--muted); }
+    @media print {
+      body { background: #fff; color: #000; }
+      section { background: #fff; border: none; box-shadow: none; }
+      .btn, .actions, .toggle { display: none; }
+    }
+    .skills { margin-top: 10px; }
+    .skill { margin-bottom: 12px; }
+    .skill-name { font-size: 14px; margin-bottom: 4px; }
+    .bar { background: var(--chip); border-radius: 6px; overflow: hidden; height: 10px; }
+    .bar-fill { background: var(--accent); height: 10px; }
+    #copy-msg { color: var(--accent); font-size: 13px; margin-top: 6px; }
+    #visitor { font-size: 12px; margin-top: 8px; color: var(--muted); }
+    img.qr { max-width: 120px; margin-top: 10px; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <div class="avatar" aria-hidden="true"><span>LH</span></div>
-      <div class="headline">
-        <h1>Laurin Hübner</h1>
-        <p>Upstalsboomstraße 4 · 26721 Emden</p>
-        <div class="contact">
-          <a href="mailto:huebner@tuta.io">📧 huebner@tuta.io</a>
-          <a href="tel:+49176623252304">📞 0176623252304</a>
-        </div>
-        <div class="chips">
-          <span class="chip">Fachhochschulreife 1,4</span>
-          <span class="chip">IT-interessiert</span>
-          <span class="chip">Home-Server &amp; Linux</span>
-        </div>
-        <a href="assets/Laurin_Huebner_CV.pdf" class="btn" data-lang-de="📄 Lebenslauf als PDF" data-lang-en="📄 Download CV as PDF">📄 Lebenslauf als PDF</a>
-      </div>
-      <div class="actions">
-        <button class="theme-toggle" onclick="toggleTheme()">🌙/☀️</button>
-        <button class="lang-toggle" onclick="toggleLang()">DE/EN</button>
-      </div>
-    </header>
+  <header>
+    <h1>Laurin Hübner</h1>
+    <p>Upstalsboomstraße 4 · 26721 Emden</p>
+    <p>
+      📧 <a href="#" id="email" onclick="copy('huebner@tuta.io','email')">huebner@tuta.io</a> · 
+      📞 <a href="#" id="phone" onclick="copy('0176623252304','phone')">0176 623252304</a>
+    </p>
+    <div id="copy-msg"></div>
+  </header>
 
-    <div class="grid">
-      <section class="card" id="about">
-        <h2 data-lang-de="Über mich" data-lang-en="About me">Über mich</h2>
-        <p data-lang-de="Engagiert, zuverlässig und kundenorientiert. Praxiserfahrung im Verkauf und an der Kasse, sicher in Warenpflege und -präsentation. Freude an strukturierter Arbeit und direktem Kundenkontakt. Darüber hinaus interessiere ich mich stark für IT: Ich betreibe einen eigenen Home-Server, experimentiere mit Linux (u. a. Netzwerke/VPN) und setze kleine Web- und Automatisierungsprojekte um."
-           data-lang-en="Dedicated, reliable and customer-oriented. Practical experience in retail and cashier work, skilled in product presentation and store operations. Enjoys structured work and direct customer contact. In addition, I have a strong interest in IT: I run my own home server, experiment with Linux (e.g. networks/VPN) and implement small web and automation projects.">
-        </p>
-      </section>
-
-      <section class="card">
-        <h2 data-lang-de="Kompetenzen" data-lang-en="Skills">Kompetenzen</h2>
-        <div class="skills">
-          <span class="skill">Einzelhandel · Retail</span>
-          <span class="skill">Kassensysteme · POS</span>
-          <span class="skill">Warenpflege</span>
-          <span class="skill">Teamarbeit</span>
-          <span class="skill">Organisation</span>
-          <span class="skill">IT · Home-Server</span>
-          <span class="skill">Linux &amp; Netzwerke</span>
-          <span class="skill">Web/Automation</span>
-        </div>
-      </section>
-
-      <section class="card">
-        <h2 data-lang-de="Arbeitserfahrung" data-lang-en="Work Experience">Arbeitserfahrung</h2>
-        <div class="item">
-          <div class="row">
-            <div>
-              <div class="org">Fressnapf Holding SE</div>
-              <div class="role" data-lang-de="Verkäufer" data-lang-en="Sales Assistant">Verkäufer</div>
-            </div>
-            <div class="date">03/2022 – 07/2022</div>
-          </div>
-          <ul class="desc">
-            <li data-lang-de="Kassieren, Kassenabschluss und -kontrolle" data-lang-en="Operating cash register, closing and control">Kassieren, Kassenabschluss und -kontrolle</li>
-            <li data-lang-de="Qualitätssicherung und Warenpflege" data-lang-en="Quality assurance and stock maintenance">Qualitätssicherung und Warenpflege</li>
-            <li data-lang-de="Kundenberatung und Verkauf" data-lang-en="Customer advice and sales">Kundenberatung und Verkauf</li>
-          </ul>
-        </div>
-        <div class="item">
-          <div class="row">
-            <div>
-              <div class="org">Dehner Gartencenter GmbH &amp; Co. KG</div>
-              <div class="role" data-lang-de="Verkäufer" data-lang-en="Sales Assistant">Verkäufer</div>
-            </div>
-            <div class="date">05/2021 – 08/2021</div>
-          </div>
-          <ul class="desc">
-            <li data-lang-de="Mithilfe beim Auszeichnen und Verräumen der Waren" data-lang-en="Assisting in labeling and shelving products">Mithilfe beim Auszeichnen und Verräumen der Waren</li>
-            <li data-lang-de="Kassiertätigkeit" data-lang-en="Cashier duties">Kassiertätigkeit</li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="card">
-        <h2 data-lang-de="Bildung" data-lang-en="Education">Bildung</h2>
-        <div class="item">
-          <div class="row">
-            <div>
-              <div class="org">Lidl Vertriebs-GmbH &amp; Co. KG</div>
-              <div class="sub" data-lang-de="Abiturientenprogramm Vertrieb" data-lang-en="Graduate Program Sales">Abiturientenprogramm Vertrieb</div>
-            </div>
-            <div class="date">08/2022 – 10/2022</div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="row">
-            <div>
-              <div class="org">Hochschule für öffentliche Verwaltung Ludwigsburg</div>
-              <div class="sub" data-lang-de="Studium Steuerverwaltung (LL.B.)" data-lang-en="Law and Taxation (LL.B.)">Studium Steuerverwaltung (LL.B.)</div>
-            </div>
-            <div class="date">10/2021 – 02/2022</div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="row">
-            <div>
-              <div class="org">IB Berufliche Schulen Stuttgart-Mitte</div>
-              <div class="sub" data-lang-de="Fachhochschulreife · Note 1,4" data-lang-en="University Entrance Qualification · Grade 1.4">Fachhochschulreife · Note 1,4</div>
-            </div>
-            <div class="date">09/2019 – 07/2021</div>
-          </div>
-        </div>
-      </section>
-
-      <section class="card">
-        <h2 data-lang-de="Projekte &amp; IT" data-lang-en="Projects &amp; IT">Projekte &amp; IT</h2>
-        <div class="item">
-          <div class="org">Home-Server &amp; Linux</div>
-          <div class="sub" data-lang-de="Aufbau & Verwaltung eines privaten Servers · Tests mit VPN (WireGuard), Netzwerkdiensten und Backups."
-               data-lang-en="Setup and management of a private server · Testing VPN (WireGuard), network services and backups.">
-            Aufbau & Verwaltung eines privaten Servers · Tests mit VPN (WireGuard), Netzwerkdiensten und Backups.
-          </div>
-        </div>
-        <div class="item">
-          <div class="org">Automatisierung</div>
-          <div class="sub" data-lang-de="Haus-Exposé automatisch aus Texten & Bildern generiert (PDF/Word). Kleine Skripte für Alltagsaufgaben."
-               data-lang-en="House exposé automatically generated from text & images (PDF/Word). Small scripts for everyday tasks.">
-            Haus-Exposé automatisch aus Texten & Bildern generiert (PDF/Word). Kleine Skripte für Alltagsaufgaben.
-          </div>
-        </div>
-        <div class="item">
-          <div class="org">Blog „Katzenwissen“</div>
-          <div class="sub" data-lang-de="Inhalte zu Tiergesundheit, Futtervergleichen & Infografiken erstellt."
-               data-lang-en="Created content on pet health, food comparisons & infographics.">
-            Inhalte zu Tiergesundheit, Futtervergleichen & Infografiken erstellt.
-          </div>
-        </div>
-      </section>
-
-      <section class="card">
-        <h2 data-lang-de="Kontakt" data-lang-en="Contact">Kontakt</h2>
-        <p><a href="mailto:huebner@tuta.io">📧 huebner@tuta.io</a> · 📞 0176623252304</p>
-      </section>
+  <main>
+    <div class="actions">
+      <a class="btn" href="Lebenslauf.pdf" target="_blank">📄 PDF herunterladen</a>
+      <a class="btn" href="javascript:window.print()">🖨️ Drucken</a>
+      <span class="toggle" onclick="toggleTheme()">🌙/☀️ Theme</span>
+      <span class="toggle" onclick="toggleLang()">🌐 Sprache</span>
     </div>
 
-    <footer>© <span id="year"></span> Laurin Hübner</footer>
-  </div>
+    <section>
+      <h2><span>👤</span>Über mich</h2>
+      <p data-lang-de="Motivierter Quereinsteiger mit Erfahrung im Verkauf und starker IT-Affinität. Ich betreibe einen eigenen Home-Server, experimentiere mit Linux und setze kleine Automatisierungs- und Webprojekte um. Ziel: eine langfristige Perspektive im IT-Bereich, z. B. als Fachinformatiker."
+         data-lang-en="Motivated career changer with retail experience and strong IT affinity. I run my own home server, work with Linux and develop small automation and web projects. Goal: a long-term career in IT, e.g. as an IT specialist.">
+      </p>
+    </section>
 
-<script>
-  // Jahr im Footer
-  document.getElementById('year').textContent = new Date().getFullYear();
+    <section>
+      <h2><span>💼</span>Berufserfahrung</h2>
+      <div class="timeline">
+        <div class="entry">
+          <h3>Fressnapf Holding SE – Verkäufer</h3>
+          <p>(01.03.2022 – 27.07.2022)</p>
+          <p>Kassiertätigkeit, Warenpflege, Beratung, Aktionen umsetzen</p>
+        </div>
+        <div class="entry">
+          <h3>Dehner Gartencenter GmbH & Co. KG – Verkäufer</h3>
+          <p>(15.05.2021 – 31.08.2021)</p>
+          <p>Kassiertätigkeit, Auszeichnen & Verräumen von Waren</p>
+        </div>
+      </div>
+    </section>
 
-  // --- THEME ---
-  function toggleTheme(){
-    document.body.classList.toggle("light");
-    localStorage.setItem("theme", document.body.classList.contains("light") ? "light" : "dark");
-  }
-  if (localStorage.getItem("theme") === "light") {
-    document.body.classList.add("light");
-  }
+    <section>
+      <h2><span>🎓</span>Bildung</h2>
+      <div class="timeline">
+        <div class="entry">
+          <h3>Lidl Vertriebs-GmbH & Co. KG – Abiturientenprogramm Vertrieb</h3>
+          <p>(01.08.2022 – 31.10.2022)</p>
+        </div>
+        <div class="entry">
+          <h3>Hochschule für öffentliche Verwaltung und Finanzen Ludwigsburg</h3>
+          <p>(01.10.2021 – 28.02.2022) – Steuerverwaltung (LL.B.)</p>
+        </div>
+        <div class="entry">
+          <h3>IB Berufliche Schulen Stuttgart-Mitte</h3>
+          <p>(09.2019 – 07.2021) – Fachhochschulreife (Note 1,4)</p>
+        </div>
+      </div>
+    </section>
 
-  // --- LANGUAGE ---
-  function applyLang(lang){
-    // html lang setzen (gut für SEO/Screenreader)
-    document.documentElement.setAttribute("lang", lang === "en" ? "en" : "de");
-    // Alle Elemente mit data-lang-de aktualisieren
-    document.querySelectorAll("[data-lang-de]").forEach(el => {
-      const txt = el.getAttribute("data-lang-" + (lang === "en" ? "en" : "de"));
-      if (txt != null) el.innerHTML = txt;
-    });
-    // Sprache merken
-    localStorage.setItem("lang", lang);
-  }
+    <section>
+      <h2><span>💻</span>IT-Projekte</h2>
+      <ul>
+        <li>Betrieb eines eigenen Home-Servers (Linux, Backup, Netzwerkdienste)</li>
+        <li>VPN mit WireGuard eingerichtet und getestet</li>
+        <li>Automatisierungen mit Python (Exposé-Erstellung, Blog-Unterstützung, Skripte)</li>
+        <li>Eigener Web-Lebenslauf mit GitHub Pages</li>
+      </ul>
+    </section>
 
-  function toggleLang(){
-    const current = localStorage.getItem("lang") || "de";
-    const next = current === "de" ? "en" : "de";
-    applyLang(next);
-  }
+    <section>
+      <h2><span>🛠</span>Kompetenzen</h2>
+      <div class="skills">
+        <div class="skill">
+          <div class="skill-name">Linux & Server</div>
+          <div class="bar"><div class="bar-fill" style="width:80%"></div></div>
+        </div>
+        <div class="skill">
+          <div class="skill-name">Python & Automatisierung</div>
+          <div class="bar"><div class="bar-fill" style="width:75%"></div></div>
+        </div>
+        <div class="skill">
+          <div class="skill-name">Kundenberatung</div>
+          <div class="bar"><div class="bar-fill" style="width:90%"></div></div>
+        </div>
+        <div class="skill">
+          <div class="skill-name">Organisation</div>
+          <div class="bar"><div class="bar-fill" style="width:85%"></div></div>
+        </div>
+      </div>
+    </section>
 
-  // --- INIT: Sprache direkt anwenden (sonst bleibt der Text leer) ---
-  const initLang = localStorage.getItem("lang") || "de";
-  applyLang(initLang);
-</script>
+    <section>
+      <h2><span>🌐</span>Visitenkarte</h2>
+      <p>Scanne den QR-Code, um meine digitale Karte zu öffnen:</p>
+      <img class="qr" src="QR_card_html.png" alt="QR-Code zur Visitenkarte">
+    </section>
+  </main>
+
+  <footer>
+    © <span id="year"></span> Laurin Hübner – Lebenslauf
+    <div id="visitor"></div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // THEME
+    function toggleTheme(){
+      document.body.classList.toggle("light");
+      localStorage.setItem("theme", document.body.classList.contains("light") ? "light" : "dark");
+    }
+    if(localStorage.getItem("theme")==="light"){ document.body.classList.add("light"); }
+    else if(!localStorage.getItem("theme") && window.matchMedia('(prefers-color-scheme: light)').matches){
+      document.body.classList.add("light");
+    }
+
+    // LANGUAGE
+    function applyLang(lang){
+      document.documentElement.setAttribute("lang", lang);
+      document.querySelectorAll("[data-lang-de]").forEach(el => {
+        const txt = el.getAttribute("data-lang-" + (lang==="en" ? "en" : "de"));
+        if(txt!=null) el.innerHTML = txt;
+      });
+      localStorage.setItem("lang", lang);
+    }
+    function toggleLang(){
+      const current = localStorage.getItem("lang")||"de";
+      applyLang(current==="de"?"en":"de");
+    }
+    applyLang(localStorage.getItem("lang")||"de");
+
+    // COPY TO CLIPBOARD
+    function copy(text,type){
+      navigator.clipboard.writeText(text).then(()=>{
+        document.getElementById("copy-msg").textContent = (type==="email"?"E-Mail":"Telefonnummer")+" kopiert ✔️";
+        setTimeout(()=>{document.getElementById("copy-msg").textContent="";},2000);
+      });
+    }
+
+    // VISITOR COUNTER (lokal)
+    let count = localStorage.getItem("visits")||0;
+    count++;
+    localStorage.setItem("visits",count);
+    document.getElementById("visitor").textContent = "Seitenaufrufe auf diesem Gerät: "+count;
+  </script>
 </body>
 </html>
