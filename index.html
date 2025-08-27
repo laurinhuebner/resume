@@ -205,26 +205,41 @@
     <footer>© <span id="year"></span> Laurin Hübner</footer>
   </div>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+<script>
+  // Jahr im Footer
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-    function toggleTheme(){
-      document.body.classList.toggle("light");
-      localStorage.setItem("theme", document.body.classList.contains("light") ? "light" : "dark");
-    }
-    if(localStorage.getItem("theme") === "light"){ document.body.classList.add("light"); }
+  // --- THEME ---
+  function toggleTheme(){
+    document.body.classList.toggle("light");
+    localStorage.setItem("theme", document.body.classList.contains("light") ? "light" : "dark");
+  }
+  if (localStorage.getItem("theme") === "light") {
+    document.body.classList.add("light");
+  }
 
-    function toggleLang(){
-      const current = localStorage.getItem("lang") || "de";
-      const newLang = current === "de" ? "en" : "de";
-      document.querySelectorAll("[data-lang-de]").forEach(el=>{
-        el.innerHTML = el.getAttribute("data-lang-"+newLang);
-      });
-      localStorage.setItem("lang", newLang);
-    }
-    // Init language
-    const initLang = localStorage.getItem("lang") || "de";
-    if(initLang === "en"){ toggleLang(); }
-  </script>
+  // --- LANGUAGE ---
+  function applyLang(lang){
+    // html lang setzen (gut für SEO/Screenreader)
+    document.documentElement.setAttribute("lang", lang === "en" ? "en" : "de");
+    // Alle Elemente mit data-lang-de aktualisieren
+    document.querySelectorAll("[data-lang-de]").forEach(el => {
+      const txt = el.getAttribute("data-lang-" + (lang === "en" ? "en" : "de"));
+      if (txt != null) el.innerHTML = txt;
+    });
+    // Sprache merken
+    localStorage.setItem("lang", lang);
+  }
+
+  function toggleLang(){
+    const current = localStorage.getItem("lang") || "de";
+    const next = current === "de" ? "en" : "de";
+    applyLang(next);
+  }
+
+  // --- INIT: Sprache direkt anwenden (sonst bleibt der Text leer) ---
+  const initLang = localStorage.getItem("lang") || "de";
+  applyLang(initLang);
+</script>
 </body>
 </html>
