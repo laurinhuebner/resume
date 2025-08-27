@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lebenslauf – Laurin Hübner</title>
+  <meta name="description" content="Lebenslauf / Portfolio von Laurin Hübner" />
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --card: #121821;
+      --muted: #7b8a9b;
+      --text: #eaf2fb;
+      --accent: #4ea7ff;
+      --chip: #1b2430;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { max-width: 980px; margin: 0 auto; padding: 24px; }
+    header { display: grid; grid-template-columns: 120px 1fr; gap: 20px; align-items: center; margin-top: 28px; }
+    .avatar { width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(145deg, #1a2230, #0b0f14); display: grid; place-items: center; box-shadow: var(--shadow); overflow: hidden; }
+    .avatar span { font-size: 44px; color: var(--accent); }
+    .headline h1 { margin: 0 0 8px 0; font-size: 34px; letter-spacing: .2px; }
+    .headline p { margin: 0; color: var(--muted); }
+    .chips { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { background: var(--chip); padding: 6px 10px; border-radius: 999px; border: 1px solid #263245; font-size: 13px; color: #c9d8ea; }
+    .grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 28px; }
+    @media (min-width: 900px) { .grid { grid-template-columns: 1fr 1fr; } }
+    .card { background: var(--card); border: 1px solid #1f2937; border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); }
+    .card h2 { margin: 0 0 12px 0; font-size: 20px; letter-spacing: .3px; }
+    .item { margin-bottom: 16px; }
+    .item:last-child { margin-bottom: 0; }
+    .item .top { display: flex; justify-content: space-between; gap: 12px; }
+    .item .top b { font-weight: 600; }
+    .item .sub { color: var(--muted); font-size: 14px; }
+    .skills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .skill { background: #0e141b; border: 1px solid #223044; padding: 10px 12px; border-radius: var(--radius-sm); }
+    footer { text-align: center; color: var(--muted); margin: 30px 0 10px; font-size: 14px; }
+    .cta { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #1a2738, #0f1520); border: 1px solid #243247; padding: 10px 14px; border-radius: 12px; }
+    .contact { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+    .contact a { background: #0e141b; border: 1px solid #223044; padding: 8px 10px; border-radius: 10px; }
+    .section-note { color: #a7b6c8; font-size: 13px; margin-top: -6px; margin-bottom: 12px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="avatar" aria-hidden="true"><span>LH</span></div>
+      <div class="headline">
+        <h1>Laurin Hübner</h1>
+        <p>IT &amp; Administration · Emden · Remote/Hybrid möglich</p>
+        <div class="contact">
+          <a href="mailto:laurin@example.de">laurin@example.de</a>
+          <a href="tel:+49-0000-000000">+49 •••• ••••••</a>
+          <a href="https://linkedin.com/in/DEIN-LINK" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://github.com/DEIN-GITHUB" target="_blank" rel="noopener">GitHub</a>
+        </div>
+        <div class="chips">
+          <span class="chip">ADHS · strukturstark im System</span>
+          <span class="chip">Netzwerke &amp; Support</span>
+          <span class="chip">Python &amp; Web</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Über mich</h2>
+        <p>Service-orientierter IT‑Allrounder mit praktischem Blick für Lösungen. Erfahrung mit Windows/Linux, Netzwerken, Hardware sowie Kommunikation per E‑Mail. Suche Aufgaben, in denen ich Ordnung schaffe, Abläufe automatisiere und Menschen helfe.</p>
+        <p class="section-note">Tipp: Diesen Text in <code>index.html</code> anpassen.</p>
+        <a class="cta" href="assets/Laurin_Huebner_CV.pdf" download>PDF‑Lebenslauf herunterladen</a>
+      </section>
+
+      <section class="card">
+        <h2>Fähigkeiten</h2>
+        <div class="skills">
+          <span class="skill">Windows &amp; Linux</span>
+          <span class="skill">Netzwerkgrundlagen</span>
+          <span class="skill">HTML/CSS</span>
+          <span class="skill">Python</span>
+          <span class="skill">Canva · Office</span>
+          <span class="skill">Organisation</span>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Berufserfahrung</h2>
+        <div class="item">
+          <div class="top"><b>IT‑Support (Freelance)</b><span class="sub">2024–heute · Emden/Remote</span></div>
+          <div class="sub">1st/2nd Level, Fehleranalyse, Einrichtung, Kundensupport.</div>
+        </div>
+        <div class="item">
+          <div class="top"><b>Assistenz/Organisation</b><span class="sub">2021–2023</span></div>
+          <div class="sub">Administrative Abläufe, Terminplanung, Dokumentation.</div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Ausbildung &amp; Kurse</h2>
+        <div class="item">
+          <div class="top"><b>Selbststudium IT &amp; Web</b><span class="sub">laufend</span></div>
+          <div class="sub">Python, Web, Automatisierung.</div>
+        </div>
+        <div class="item">
+          <div class="top"><b>Schulabschluss</b><span class="sub">—</span></div>
+          <div class="sub">Details hier ergänzen.</div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Projekte</h2>
+        <div class="item">
+          <div class="top"><b>Haus‑Exposé Automatisierung</b><span class="sub">2024</span></div>
+          <div class="sub">Texte &amp; Bilder halbautomatisch als PDF/Word generiert.</div>
+        </div>
+        <div class="item">
+          <div class="top"><b>Blog „Katzenwissen“</b><span class="sub">2025</span></div>
+          <div class="sub">Artikel, Infografiken, Futter‑Vergleiche.</div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Kontakt</h2>
+        <p>Am liebsten per E‑Mail. Gern auch mit kurzer Beschreibung des Anliegens.</p>
+        <p><a href="mailto:laurin@example.de">laurin@example.de</a></p>
+      </section>
+    </div>
+
+    <footer>© <span id="year"></span> Laurin Hübner · Einfache statische Website (GitHub Pages/Netlify)</footer>
+  </div>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
