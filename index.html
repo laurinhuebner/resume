@@ -20,7 +20,7 @@
       transition: background .3s, color .3s;
     }
     header { text-align:center; padding: 30px 10px; }
-    header h1 { margin:0; font-size:32px; }
+    header h1 { margin:0; font-size:36px; }
     header p { margin:4px 0; color:var(--muted); }
     header a { color:var(--accent); text-decoration:none; }
     main { max-width: 900px; margin: 0 auto; padding: 20px; }
@@ -29,7 +29,7 @@
       border-radius:14px; padding:20px; margin-bottom:20px;
       box-shadow: 0 6px 18px rgba(0,0,0,.3);
     }
-    section h2 { margin:0 0 10px; display:flex; align-items:center; font-size:20px; }
+    section h2 { margin:0 0 12px; display:flex; align-items:center; font-size:20px; }
     section h2 span { margin-right:8px; }
     .timeline { border-left:2px solid var(--accent); margin-left:10px; padding-left:20px; }
     .entry { margin-bottom:18px; }
@@ -44,40 +44,37 @@
     .toggle { margin-left:15px; cursor:pointer; font-size:14px; color:var(--muted); }
     .qr { max-width:140px; height:auto; background:#fff; padding:6px; border-radius:8px; }
     footer { text-align:center; color:var(--muted); padding:20px; }
+    ul { margin:0; padding-left:20px; }
 
-    /* ---------- PRINT: macht den PDF-Export identisch zur Seite ---------- */
+    /* ---------- PRINT ---------- */
     @media print {
-      /* sorgt dafür, dass Farben/Flächen genauso gedruckt werden */
       body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      /* Buttons/Schalter & Footer im PDF ausblenden */
       .actions, .toggle, footer { display:none !important; }
-      /* Rahmen/Schatten sichtbar lassen (wirkt wie Cards im PDF) */
       section { break-inside: avoid; page-break-inside: avoid; }
-      /* Seitenränder etwas schmaler fürs PDF */
       @page { margin: 12mm; }
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Laurin Hübner</h1>
+    <h1>Laurin Hübner 👨‍💻</h1>
     <p>Upstalsboomstraße 4 · 26721 Emden</p>
     <p>📧 <a href="mailto:huebner@tuta.io">huebner@tuta.io</a> · 📞 0176 623252304</p>
   </header>
 
   <main>
     <div class="actions">
-      <!-- Öffnet den Druckdialog → „Als PDF speichern“ ergibt ein PDF im selben Look -->
       <a class="btn" href="javascript:window.print()">📄 PDF herunterladen</a>
-      <a class="btn" href="javascript:window.print()">🖨️ Drucken</a>
       <span class="toggle" onclick="toggleTheme()">🌙/☀️ Theme</span>
     </div>
 
     <section>
       <h2><span>👤</span>Über mich</h2>
-      <p>Motivierter Quereinsteiger mit Erfahrung im Verkauf und starker IT-Affinität.
-      Ich betreibe einen eigenen Home-Server, experimentiere mit Linux und setze kleine Automatisierungs-
-      und Webprojekte um. Ziel: eine langfristige Perspektive im IT-Bereich, z. B. als Fachinformatiker.</p>
+      <ul>
+        <li>Quereinsteiger mit starker IT-Affinität (Home-Server, Linux, Automatisierung, Webprojekte)</li>
+        <li>Berufserfahrung im Verkauf, Beratung und Organisation</li>
+        <li>Ziel: langfristige Perspektive als Fachinformatiker Systemintegration</li>
+      </ul>
     </section>
 
     <section>
@@ -118,8 +115,8 @@
       <h2><span>💻</span>IT-Projekte</h2>
       <ul>
         <li>Betrieb eines eigenen Home-Servers (Linux, Backup, Netzwerkdienste)</li>
-        <li>VPN mit WireGuard eingerichtet und getestet</li>
-        <li>Automatisierungen mit Python (Exposé-Erstellung, Blog-Unterstützung, Skripte)</li>
+        <li>VPN mit WireGuard für sicheren Remote-Zugriff</li>
+        <li>Python-Skripte zur Automatisierung (Exposés, Blog-Unterstützung, kleine Tools)</li>
         <li>Eigener Web-Lebenslauf mit GitHub Pages</li>
       </ul>
     </section>
@@ -127,10 +124,8 @@
     <section>
       <h2><span>🛠</span>Kompetenzen</h2>
       <ul>
-        <li>Linux &amp; Serveradministration</li>
-        <li>Python &amp; Automatisierung</li>
-        <li>Kundenberatung &amp; Verkauf</li>
-        <li>Organisation &amp; Teamarbeit</li>
+        <li><b>IT:</b> Linux-Server, Python, Netzwerke</li>
+        <li><b>Soft Skills:</b> Organisation, Kundenberatung, Teamarbeit</li>
       </ul>
     </section>
 
@@ -139,14 +134,30 @@
       <ul>
         <li>Fitnesstrainer C-Lizenz</li>
         <li>Weiterbildungen im Bereich Ökonomie</li>
-        <li>Geplante Zusatzqualifikationen im IT-Bereich (Linux, Python, Netzwerke)</li>
+        <li>Geplante Zusatzqualifikationen: Linux, Python, Netzwerke</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><span>🌍</span>Sprachen</h2>
+      <ul>
+        <li>Deutsch – Muttersprache</li>
+        <li>Englisch – gut (B2)</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><span>✨</span>Interessen</h2>
+      <ul>
+        <li>IT & Technik (Server, Automatisierung, Web)</li>
+        <li>Gartenpflege & DIY-Projekte</li>
+        <li>Gaming & neue Technologien</li>
       </ul>
     </section>
 
     <section>
       <h2><span>🌐</span>Visitenkarte</h2>
       <p>Scanne den QR-Code, um meine digitale Karte zu öffnen:</p>
-      <!-- Wenn du die Datei QR_card_html.png im Repo-Root hast, wird sie angezeigt -->
       <img class="qr" src="QR_card_html.png" alt="QR-Code zur Visitenkarte"
            onerror="this.style.display='none'; document.getElementById('qr-fallback').style.display='block';">
       <p id="qr-fallback" style="display:none"><a class="btn" href="card.html" target="_blank">Karte öffnen</a></p>
@@ -161,7 +172,6 @@
       document.body.classList.toggle("light");
       localStorage.setItem("theme", document.body.classList.contains("light") ? "light" : "dark");
     }
-    // Startmodus: was der Besucher zuletzt hatte – sonst Systemvorgabe
     const pref = localStorage.getItem("theme");
     if (pref==="light" || (!pref && matchMedia('(prefers-color-scheme: light)').matches)) {
       document.body.classList.add("light");
