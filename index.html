@@ -5,195 +5,287 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Lebenslauf – Laurin Hübner</title>
   <style>
-    :root {
+    :root{
       --bg:#0b0f14; --card:#121821; --text:#eaf2fb; --muted:#8aa0b7;
       --accent:#4ea7ff; --border:#1f2937; --chip:#1b2430;
-      --qr-dark:#000000; --qr-light:#ffffff; /* QR-Farben im Dark Mode */
+      --qr-dark:#000000; --qr-light:#ffffff;
+      --shadow:0 8px 22px rgba(0,0,0,.35); --radius:16px;
     }
-    body.light {
+    body.light{
       --bg:#f7f9fc; --card:#ffffff; --text:#1a1a1a; --muted:#5c6b7a;
       --accent:#0066cc; --border:#d1d9e0; --chip:#e4e9f0;
-      --qr-dark:#000000; --qr-light:#ffffff; /* QR-Farben im Light Mode */
+      --qr-dark:#000000; --qr-light:#ffffff;
     }
-    * { box-sizing: border-box; }
-    body {
-      margin:0; font-family:system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-      background:var(--bg); color:var(--text); transition: background .3s, color .3s;
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+      background:var(--bg); color:var(--text); transition:background .3s,color .3s;
     }
-    header { text-align:center; padding: 30px 10px; }
-    header h1 { margin:0; font-size:36px; }
-    header p { margin:4px 0; color:var(--muted); }
-    header a { color:var(--accent); text-decoration:none; }
-    main { max-width: 900px; margin: 0 auto; padding: 20px; }
-    section {
-      background: var(--card); border:1px solid var(--border);
-      border-radius:14px; padding:20px; margin-bottom:20px;
-      box-shadow: 0 6px 18px rgba(0,0,0,.3);
+    .container{max-width:980px;margin:0 auto;padding:20px}
+    header{display:grid;grid-template-columns:110px 1fr auto;gap:18px;align-items:center;margin-top:18px}
+    .avatar{width:110px;height:110px;border-radius:50%;overflow:hidden;border:2px solid var(--border);box-shadow:var(--shadow);background:#222;display:grid;place-items:center}
+    .avatar img{width:100%;height:100%;object-fit:cover}
+    .avatar .ph{color:var(--muted);font-weight:700}
+    .head h1{margin:0;font-size:34px}
+    .head p{margin:4px 0;color:var(--muted)}
+    .contact a{color:var(--accent);text-decoration:none;margin-right:10px}
+    .actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}
+    .btn{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer;text-decoration:none}
+    .ghost{background:var(--chip);color:var(--text);border:1px solid var(--border)}
+    .row{display:grid;grid-template-columns:1fr;gap:16px;margin-top:18px}
+    @media(min-width:860px){.row{grid-template-columns:1fr 1fr}}
+    section{
+      background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+      padding:20px;margin:14px 0;box-shadow:var(--shadow)
     }
-    section h2 { margin:0 0 12px; display:flex; align-items:center; font-size:20px; }
-    section h2 span { margin-right:8px; }
-    .timeline { border-left:2px solid var(--accent); margin-left:10px; padding-left:20px; }
-    .entry { margin-bottom:18px; }
-    .entry h3 { margin:0; font-size:16px; }
-    .entry p { margin:2px 0; color:var(--muted); }
-    ul { margin:0; padding-left:20px; }
-    .btn {
-      display:inline-block; margin:10px 6px; padding:10px 18px;
-      border-radius:10px; background:var(--accent); color:#fff;
-      font-weight:600; text-decoration:none;
+    section h2{margin:0 0 12px;display:flex;align-items:center;font-size:20px}
+    section h2 span{margin-right:8px}
+    ul{margin:0;padding-left:20px}
+    .timeline{border-left:2px solid var(--accent);margin-left:10px;padding-left:16px}
+    .entry{margin:0 0 16px;opacity:.0;transform:translateY(8px);transition:opacity .5s ease,transform .5s ease}
+    .entry.reveal{opacity:1;transform:none}
+    .entry h3{margin:0;font-size:16px}
+    .entry p{margin:2px 0;color:var(--muted)}
+    .search{display:flex;gap:8px;align-items:center}
+    .search input{
+      width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--border);
+      background:var(--chip);color:var(--text)
     }
-    .actions { text-align:center; margin-bottom: 20px; }
-    .toggle { margin-left:15px; cursor:pointer; font-size:14px; color:var(--muted); }
-    .qr-wrap { text-align:center; }
-    .qr-canvas { background:#fff; border-radius:10px; padding:6px; box-shadow: 0 2px 8px rgba(0,0,0,.25); }
-    footer { text-align:center; color:var(--muted); padding:20px; }
+    .qr-wrap{text-align:center}
+    .qr-canvas{background:#fff;border-radius:12px;padding:8px;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+    footer{text-align:center;color:var(--muted);padding:20px}
 
-    /* ---------- PRINT ---------- */
-    @media print {
-      body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      .actions, .toggle, footer { display:none !important; }
-      section { break-inside: avoid; page-break-inside: avoid; }
-      @page { margin: 12mm; }
+    /* Sticky bottom bar (mobile) */
+    .sticky{
+      position:fixed;left:0;right:0;bottom:0;background:rgba(0,0,0,.35);
+      backdrop-filter:blur(6px);display:flex;gap:10px;justify-content:center;padding:10px
     }
+    .sticky .btn{padding:12px 16px}
+    @media(min-width:720px){.sticky{display:none}}
+    /* PRINT */
+    @media print{
+      body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+      .actions,.sticky,footer{display:none!important}
+      section{break-inside:avoid;page-break-inside:avoid}
+      @page{margin:12mm}
+      .sign{display:block!important}
+    }
+    /* Optional Signatur im Print/Web (versteckt bis Datei existiert) */
+    .sign{display:none;text-align:right;margin-top:6px}
+    .sign img{max-height:46px;opacity:.9}
   </style>
 </head>
 <body>
-  <header>
-    <h1>Laurin Hübner 👨‍💻</h1>
-    <p>Upstalsboomstraße 4 · 26721 Emden</p>
-    <p>📧 <a href="mailto:huebner@tuta.io">huebner@tuta.io</a> · 📞 0176 623252304</p>
-  </header>
+  <div class="container">
+    <header>
+      <div class="avatar">
+        <img src="assets/profile.jpg" alt="Profilfoto" onerror="this.parentElement.innerHTML='<div class=&quot;ph&quot;>LH</div>'">
+      </div>
+      <div class="head">
+        <h1>Laurin Hübner</h1>
+        <p>Upstalsboomstraße 4 · 26721 Emden</p>
+        <div class="contact">
+          <a href="mailto:huebner@tuta.io">📧 huebner@tuta.io</a>
+          <a href="tel:+49176623252304">📞 0176 623252304</a>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn" onclick="window.print()" data-de="📄 PDF herunterladen" data-en="📄 Download PDF">📄 PDF herunterladen</button>
+        <button class="btn ghost" onclick="downloadVCard()" data-de="📇 vCard" data-en="📇 vCard">📇 vCard</button>
+        <button class="btn ghost" onclick="toggleTheme()">🌙/☀️</button>
+        <button class="btn ghost" onclick="toggleLang()" data-de="DE/EN" data-en="DE/EN">DE/EN</button>
+      </div>
+    </header>
 
-  <main>
-    <div class="actions">
-      <a class="btn" href="javascript:window.print()">📄 PDF herunterladen</a>
-      <span class="toggle" onclick="toggleTheme()">🌙/☀️ Theme</span>
+    <section>
+      <h2><span>🔎</span><span data-de="Schnellsuche" data-en="Quick Search">Schnellsuche</span></h2>
+      <div class="search">
+        <input id="q" type="search" placeholder="Begriffe eingeben … (z. B. Linux, Fressnapf)" />
+      </div>
+    </section>
+
+    <section>
+      <h2><span>👤</span><span data-de="Über mich" data-en="About me">Über mich</span></h2>
+      <ul>
+        <li data-de="Quereinsteiger mit starker IT-Affinität (Home-Server, Linux, Automatisierung, Webprojekte)" data-en="Career changer with strong IT affinity (home server, Linux, automation, web projects)">Quereinsteiger…</li>
+        <li data-de="Berufserfahrung im Verkauf, Beratung und Organisation" data-en="Experience in retail, customer advice and organization">Berufserfahrung…</li>
+        <li data-de="Ziel: langfristige Perspektive als Fachinformatiker Systemintegration" data-en="Goal: long-term role as IT specialist (system integration)">Ziel…</li>
+      </ul>
+    </section>
+
+    <div class="row">
+      <section>
+        <h2><span>💼</span><span data-de="Berufserfahrung" data-en="Work Experience">Berufserfahrung</span></h2>
+        <div class="timeline filter-scope" id="exp">
+          <div class="entry item">
+            <h3>Fressnapf Holding SE – <span data-de="Verkäufer" data-en="Sales Assistant">Verkäufer</span></h3>
+            <p>01.03.2022 – 27.07.2022</p>
+            <p data-de="Kassiertätigkeit, Warenpflege, Beratung, Aktionen umsetzen" data-en="Cashier work, stock maintenance, customer advice, campaigns">…</p>
+          </div>
+          <div class="entry item">
+            <h3>Dehner Gartencenter GmbH &amp; Co. KG – <span data-de="Verkäufer" data-en="Sales Assistant">Verkäufer</span></h3>
+            <p>15.05.2021 – 31.08.2021</p>
+            <p data-de="Kassiertätigkeit, Auszeichnen &amp; Verräumen von Waren" data-en="Cashier duties, labelling & shelving">…</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2><span>🎓</span><span data-de="Bildung" data-en="Education">Bildung</span></h2>
+        <div class="timeline filter-scope" id="edu">
+          <div class="entry item">
+            <h3>Lidl Vertriebs-GmbH &amp; Co. KG – <span data-de="Abiturientenprogramm Vertrieb" data-en="Graduate Program Sales">Abiturientenprogramm Vertrieb</span></h3>
+            <p>01.08.2022 – 31.10.2022</p>
+          </div>
+          <div class="entry item">
+            <h3>Hochschule für öffentliche Verwaltung und Finanzen Ludwigsburg</h3>
+            <p>01.10.2021 – 28.02.2022 – <span data-de="Steuerverwaltung (LL.B.)" data-en="Tax Administration (LL.B.)">Steuerverwaltung (LL.B.)</span></p>
+          </div>
+          <div class="entry item">
+            <h3>IB Berufliche Schulen Stuttgart-Mitte</h3>
+            <p>09.2019 – 07.2021 – <span data-de="Fachhochschulreife (Note 1,4)" data-en="University entrance qualification (grade 1.4)">Fachhochschulreife…</span></p>
+          </div>
+        </div>
+      </section>
     </div>
 
     <section>
-      <h2><span>👤</span>Über mich</h2>
-      <ul>
-        <li>Quereinsteiger mit starker IT-Affinität (Home-Server, Linux, Automatisierung, Webprojekte)</li>
-        <li>Berufserfahrung im Verkauf, Beratung und Organisation</li>
-        <li>Ziel: langfristige Perspektive als Fachinformatiker Systemintegration</li>
+      <h2><span>💻</span><span data-de="IT-Projekte" data-en="IT Projects">IT-Projekte</span></h2>
+      <ul class="filter-scope" id="projects">
+        <li data-de="Betrieb eines eigenen Home-Servers (Linux, Backup, Netzwerkdienste)" data-en="Running a home server (Linux, backup, network services)">…</li>
+        <li data-de="VPN mit WireGuard für sicheren Remote-Zugriff" data-en="VPN with WireGuard for secure remote access">…</li>
+        <li data-de="Python-Skripte zur Automatisierung (Exposés, Blog-Unterstützung, kleine Tools)" data-en="Python scripts for automation (exposés, blog helpers, small tools)">…</li>
+        <li data-de="Eigener Web-Lebenslauf mit GitHub Pages" data-en="Web résumé with GitHub Pages">…</li>
       </ul>
     </section>
 
     <section>
-      <h2><span>💼</span>Berufserfahrung</h2>
-      <div class="timeline">
-        <div class="entry">
-          <h3>Fressnapf Holding SE – Verkäufer</h3>
-          <p>(01.03.2022 – 27.07.2022)</p>
-          <p>Kassiertätigkeit, Warenpflege, Beratung, Aktionen umsetzen</p>
-        </div>
-        <div class="entry">
-          <h3>Dehner Gartencenter GmbH &amp; Co. KG – Verkäufer</h3>
-          <p>(15.05.2021 – 31.08.2021)</p>
-          <p>Kassiertätigkeit, Auszeichnen &amp; Verräumen von Waren</p>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <h2><span>🎓</span>Bildung</h2>
-      <div class="timeline">
-        <div class="entry">
-          <h3>Lidl Vertriebs-GmbH &amp; Co. KG – Abiturientenprogramm Vertrieb</h3>
-          <p>(01.08.2022 – 31.10.2022)</p>
-        </div>
-        <div class="entry">
-          <h3>Hochschule für öffentliche Verwaltung und Finanzen Ludwigsburg</h3>
-          <p>(01.10.2021 – 28.02.2022) – Steuerverwaltung (LL.B.)</p>
-        </div>
-        <div class="entry">
-          <h3>IB Berufliche Schulen Stuttgart-Mitte</h3>
-          <p>(09.2019 – 07.2021) – Fachhochschulreife (Note 1,4)</p>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <h2><span>💻</span>IT-Projekte</h2>
-      <ul>
-        <li>Betrieb eines eigenen Home-Servers (Linux, Backup, Netzwerkdienste)</li>
-        <li>VPN mit WireGuard für sicheren Remote-Zugriff</li>
-        <li>Python-Skripte zur Automatisierung (Exposés, Blog-Unterstützung, kleine Tools)</li>
-        <li>Eigener Web-Lebenslauf mit GitHub Pages</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2><span>🛠</span>Kompetenzen</h2>
-      <ul>
+      <h2><span>🛠</span><span data-de="Kompetenzen" data-en="Skills">Kompetenzen</span></h2>
+      <ul class="filter-scope">
         <li><b>IT:</b> Linux-Server, Python, Netzwerke</li>
         <li><b>Soft Skills:</b> Organisation, Kundenberatung, Teamarbeit</li>
       </ul>
     </section>
 
     <section>
-      <h2><span>📑</span>Zertifikate</h2>
-      <ul>
-        <li>Fitnesstrainer C-Lizenz</li>
-        <li>Weiterbildungen im Bereich Ökonomie</li>
-        <li>Geplante Zusatzqualifikationen: Linux, Python, Netzwerke</li>
+      <h2><span>📑</span><span data-de="Zertifikate" data-en="Certificates">Zertifikate</span></h2>
+      <ul class="filter-scope">
+        <li data-de="Fitnesstrainer C-Lizenz" data-en="Fitness Trainer C-License">…</li>
+        <li data-de="Weiterbildungen im Bereich Ökonomie" data-en="Further training in economics">…</li>
+        <li data-de="Geplante Zusatzqualifikationen: Linux, Python, Netzwerke" data-en="Planned qualifications: Linux, Python, networking">…</li>
       </ul>
     </section>
 
     <section>
-      <h2><span>🌍</span>Sprachen</h2>
-      <ul>
-        <li>Deutsch – Muttersprache</li>
-        <li>Englisch – gut (B2)</li>
+      <h2><span>🌍</span><span data-de="Sprachen" data-en="Languages">Sprachen</span></h2>
+      <ul class="filter-scope">
+        <li data-de="Deutsch – Muttersprache" data-en="German – native">…</li>
+        <li data-de="Englisch – gut (B2)" data-en="English – good (B2)">…</li>
       </ul>
     </section>
 
     <section>
-      <h2><span>🌐</span>Visitenkarte</h2>
+      <h2><span>🌐</span><span data-de="Visitenkarte" data-en="Business Card">Visitenkarte</span></h2>
       <div class="qr-wrap">
-        <canvas id="qr" class="qr-canvas" width="140" height="140" aria-label="QR-Code zur Visitenkarte"></canvas>
+        <canvas id="qr" class="qr-canvas" width="160" height="160" aria-label="QR-Code zur Visitenkarte"></canvas>
         <p style="margin-top:10px;">
-          <a class="btn" href="https://laurinhuebner.github.io/resume/card.html" target="_blank">Karte öffnen</a>
+          <a class="btn" href="https://laurinhuebner.github.io/resume/card.html" target="_blank" data-de="Karte öffnen" data-en="Open card">Karte öffnen</a>
         </p>
       </div>
+      <div class="sign">
+        <img src="assets/signature.png" alt="Signatur" onerror="this.parentElement.style.display='none'">
+      </div>
     </section>
-  </main>
 
-  <footer>© <span id="year"></span> Laurin Hübner – Lebenslauf</footer>
+    <footer>© <span id="year"></span> Laurin Hübner – Lebenslauf</footer>
+  </div>
 
-  <!-- Kleine, zuverlässige QR-Library (lokaler Canvas/SVG-Renderer) -->
+  <!-- QR-Lib (leicht & lokal rendernd) -->
   <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
   <script>
     const CARD_URL = "https://laurinhuebner.github.io/resume/card.html";
     document.getElementById('year').textContent = new Date().getFullYear();
 
+    /* ---------- THEME ---------- */
     function renderQR(){
       const canvas = document.getElementById('qr');
       if(!canvas) return;
       const dark = getComputedStyle(document.body).getPropertyValue('--qr-dark').trim() || '#000';
       const light = getComputedStyle(document.body).getPropertyValue('--qr-light').trim() || '#fff';
-      QRCode.toCanvas(canvas, CARD_URL, {
-        width: 140, margin: 1,
-        color: { dark: dark, light: light }
-      }, function (error) {
-        if (error) console.error(error);
-      });
+      QRCode.toCanvas(canvas, CARD_URL, { width:160, margin:1, color:{dark, light} }, (e)=>{ if(e) console.error(e); });
     }
-
     function toggleTheme(){
       document.body.classList.toggle("light");
       localStorage.setItem("theme", document.body.classList.contains("light") ? "light" : "dark");
-      renderQR(); // QR neu zeichnen, damit Farben zum Theme passen
+      renderQR();
     }
-
-    // Startmodus: gespeicherte Präferenz oder Systemvorgabe
     const pref = localStorage.getItem("theme");
     if (pref==="light" || (!pref && matchMedia('(prefers-color-scheme: light)').matches)) {
       document.body.classList.add("light");
     }
 
-    // QR beim Laden zeichnen
+    /* ---------- LANGUAGE ---------- */
+    function applyLang(lang){
+      document.documentElement.setAttribute("lang", lang);
+      document.querySelectorAll("[data-de]").forEach(el=>{
+        const txt = el.getAttribute(lang==="en"?"data-en":"data-de");
+        if(txt) el.textContent = txt;
+      });
+      localStorage.setItem("lang", lang);
+    }
+    function toggleLang(){
+      const curr = localStorage.getItem("lang") || "de";
+      applyLang(curr==="de"?"en":"de");
+    }
+    applyLang(localStorage.getItem("lang") || "de");
+
+    /* ---------- SEARCH / FILTER ---------- */
+    const q = document.getElementById('q');
+    q.addEventListener('input', ()=>{
+      const term = q.value.toLowerCase();
+      document.querySelectorAll('.filter-scope .item, .filter-scope li, .filter-scope p, .filter-scope h3').forEach(el=>{
+        const txt = el.innerText.toLowerCase();
+        const show = !term || txt.includes(term);
+        // Für Container-Einträge: am parent .entry entscheiden
+        const container = el.closest('.entry') || el;
+        container.style.display = show ? '' : 'none';
+      });
+    });
+
+    /* ---------- TIMELINE ANIMATION ---------- */
+    const io = new IntersectionObserver(entries=>{
+      entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('reveal'); });
+    }, {threshold:.2});
+    document.querySelectorAll('.entry').forEach(el=>io.observe(el));
+
+    /* ---------- vCard Download ---------- */
+    function downloadVCard(){
+      const vcf =
+`BEGIN:VCARD
+VERSION:3.0
+N:Hübner;Laurin;;;
+FN:Laurin Hübner
+EMAIL;type=INTERNET;type=HOME;type=pref:huebner@tuta.io
+TEL;type=CELL;type=VOICE;type=pref:+49 176 623252304
+ADR;type=HOME:;;Upstalsboomstraße 4;Emden;;26721;Deutschland
+URL:https://laurinhuebner.github.io/resume/
+END:VCARD`;
+      const blob = new Blob([vcf], {type:"text/vcard;charset=utf-8"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = "Laurin_Huebner.vcf";
+      document.body.appendChild(a); a.click();
+      setTimeout(()=>{ URL.revokeObjectURL(url); a.remove(); }, 0);
+    }
+
+    /* ---------- INIT ---------- */
     renderQR();
   </script>
+
+  <!-- Mobile Sticky Bar -->
+  <div class="sticky">
+    <a class="btn" href="tel:+49176623252304">📞 Anrufen</a>
+    <a class="btn" href="mailto:huebner@tuta.io">📧 E-Mail</a>
+  </div>
 </body>
 </html>
