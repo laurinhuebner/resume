@@ -1,30 +1,61 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Lebenslauf – Laurin Hübner</title>
   <style>
-    :root { --bg:#0b0f14; --card:#121821; --text:#eaf2fb; --muted:#8aa0b7; --accent:#4ea7ff; --border:#1f2937; --chip:#1b2430; }
-    body.light { --bg:#f7f9fc; --card:#ffffff; --text:#1a1a1a; --muted:#5c6b7a; --accent:#0066cc; --border:#d1d9e0; --chip:#e4e9f0; }
-    body { margin:0; font-family:system-ui,sans-serif; background:var(--bg); color:var(--text); transition:background .3s,color .3s; }
-    header { text-align:center; padding:30px 10px; }
+    :root {
+      --bg:#0b0f14; --card:#121821; --text:#eaf2fb; --muted:#8aa0b7;
+      --accent:#4ea7ff; --border:#1f2937; --chip:#1b2430;
+    }
+    body.light {
+      --bg:#f7f9fc; --card:#ffffff; --text:#1a1a1a; --muted:#5c6b7a;
+      --accent:#0066cc; --border:#d1d9e0; --chip:#e4e9f0;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin:0; font-family:system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      background:var(--bg); color:var(--text);
+      transition: background .3s, color .3s;
+    }
+    header { text-align:center; padding: 30px 10px; }
     header h1 { margin:0; font-size:32px; }
     header p { margin:4px 0; color:var(--muted); }
     header a { color:var(--accent); text-decoration:none; }
-    main { max-width:900px; margin:auto; padding:20px; }
-    section { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:20px; margin-bottom:20px; box-shadow:0 6px 18px rgba(0,0,0,.3); }
-    section h2 { margin-top:0; display:flex; align-items:center; font-size:20px; }
+    main { max-width: 900px; margin: 0 auto; padding: 20px; }
+    section {
+      background: var(--card); border:1px solid var(--border);
+      border-radius:14px; padding:20px; margin-bottom:20px;
+      box-shadow: 0 6px 18px rgba(0,0,0,.3);
+    }
+    section h2 { margin:0 0 10px; display:flex; align-items:center; font-size:20px; }
     section h2 span { margin-right:8px; }
-    .btn { display:inline-block; margin:10px 5px; padding:10px 18px; border-radius:10px; background:var(--accent); color:#fff; font-weight:600; text-decoration:none; }
-    .actions { text-align:center; margin-bottom:20px; }
-    .toggle { margin-left:15px; cursor:pointer; font-size:14px; color:var(--muted); }
     .timeline { border-left:2px solid var(--accent); margin-left:10px; padding-left:20px; }
     .entry { margin-bottom:18px; }
     .entry h3 { margin:0; font-size:16px; }
     .entry p { margin:2px 0; color:var(--muted); }
-    .qrwrap svg { max-width:140px; height:auto; background:#fff; padding:6px; border-radius:8px; }
-    @media print { .btn,.actions,.toggle { display:none; } section{ background:#fff; border:none; box-shadow:none; } }
+    .btn {
+      display:inline-block; margin:10px 6px; padding:10px 18px;
+      border-radius:10px; background:var(--accent); color:#fff;
+      font-weight:600; text-decoration:none;
+    }
+    .actions { text-align:center; margin-bottom: 20px; }
+    .toggle { margin-left:15px; cursor:pointer; font-size:14px; color:var(--muted); }
+    .qr { max-width:140px; height:auto; background:#fff; padding:6px; border-radius:8px; }
+    footer { text-align:center; color:var(--muted); padding:20px; }
+
+    /* ---------- PRINT: macht den PDF-Export identisch zur Seite ---------- */
+    @media print {
+      /* sorgt dafür, dass Farben/Flächen genauso gedruckt werden */
+      body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      /* Buttons/Schalter & Footer im PDF ausblenden */
+      .actions, .toggle, footer { display:none !important; }
+      /* Rahmen/Schatten sichtbar lassen (wirkt wie Cards im PDF) */
+      section { break-inside: avoid; page-break-inside: avoid; }
+      /* Seitenränder etwas schmaler fürs PDF */
+      @page { margin: 12mm; }
+    }
   </style>
 </head>
 <body>
@@ -36,16 +67,17 @@
 
   <main>
     <div class="actions">
-      <a class="btn" href="Laurin_Huebner_CV.pdf" download>📄 PDF herunterladen</a>
+      <!-- Öffnet den Druckdialog → „Als PDF speichern“ ergibt ein PDF im selben Look -->
+      <a class="btn" href="javascript:window.print()">📄 PDF herunterladen</a>
       <a class="btn" href="javascript:window.print()">🖨️ Drucken</a>
       <span class="toggle" onclick="toggleTheme()">🌙/☀️ Theme</span>
     </div>
 
     <section>
       <h2><span>👤</span>Über mich</h2>
-      <p>Motivierter Quereinsteiger mit Erfahrung im Verkauf und starker IT-Affinität. 
-      Ich betreibe einen eigenen Home-Server, experimentiere mit Linux und setze kleine Automatisierungs- und Webprojekte um. 
-      Ziel: eine langfristige Perspektive im IT-Bereich, z. B. als Fachinformatiker.</p>
+      <p>Motivierter Quereinsteiger mit Erfahrung im Verkauf und starker IT-Affinität.
+      Ich betreibe einen eigenen Home-Server, experimentiere mit Linux und setze kleine Automatisierungs-
+      und Webprojekte um. Ziel: eine langfristige Perspektive im IT-Bereich, z. B. als Fachinformatiker.</p>
     </section>
 
     <section>
@@ -67,9 +99,18 @@
     <section>
       <h2><span>🎓</span>Bildung</h2>
       <div class="timeline">
-        <div class="entry"><h3>Lidl Vertriebs-GmbH &amp; Co. KG – Abiturientenprogramm Vertrieb</h3><p>(01.08.2022 – 31.10.2022)</p></div>
-        <div class="entry"><h3>Hochschule für öffentliche Verwaltung und Finanzen Ludwigsburg</h3><p>(01.10.2021 – 28.02.2022) – Steuerverwaltung (LL.B.)</p></div>
-        <div class="entry"><h3>IB Berufliche Schulen Stuttgart-Mitte</h3><p>(09.2019 – 07.2021) – Fachhochschulreife (Note 1,4)</p></div>
+        <div class="entry">
+          <h3>Lidl Vertriebs-GmbH &amp; Co. KG – Abiturientenprogramm Vertrieb</h3>
+          <p>(01.08.2022 – 31.10.2022)</p>
+        </div>
+        <div class="entry">
+          <h3>Hochschule für öffentliche Verwaltung und Finanzen Ludwigsburg</h3>
+          <p>(01.10.2021 – 28.02.2022) – Steuerverwaltung (LL.B.)</p>
+        </div>
+        <div class="entry">
+          <h3>IB Berufliche Schulen Stuttgart-Mitte</h3>
+          <p>(09.2019 – 07.2021) – Fachhochschulreife (Note 1,4)</p>
+        </div>
       </div>
     </section>
 
@@ -105,20 +146,14 @@
     <section>
       <h2><span>🌐</span>Visitenkarte</h2>
       <p>Scanne den QR-Code, um meine digitale Karte zu öffnen:</p>
-      <div class="qrwrap">
-        <!-- Inline QR-Code -->
-        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">
-          <rect width="100" height="100" fill="white"/>
-          <text x="10" y="55" font-size="10">QR → card.html</text>
-        </svg>
-      </div>
-      <p><a class="btn" href="card.html" target="_blank">Karte öffnen</a></p>
+      <!-- Wenn du die Datei QR_card_html.png im Repo-Root hast, wird sie angezeigt -->
+      <img class="qr" src="QR_card_html.png" alt="QR-Code zur Visitenkarte"
+           onerror="this.style.display='none'; document.getElementById('qr-fallback').style.display='block';">
+      <p id="qr-fallback" style="display:none"><a class="btn" href="card.html" target="_blank">Karte öffnen</a></p>
     </section>
   </main>
 
-  <footer style="text-align:center; color: var(--muted); padding:20px;">
-    © <span id="year"></span> Laurin Hübner – Lebenslauf
-  </footer>
+  <footer>© <span id="year"></span> Laurin Hübner – Lebenslauf</footer>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
@@ -126,8 +161,11 @@
       document.body.classList.toggle("light");
       localStorage.setItem("theme", document.body.classList.contains("light") ? "light" : "dark");
     }
-    if(localStorage.getItem("theme")==="light"){ document.body.classList.add("light"); }
-    else if(!localStorage.getItem("theme") && window.matchMedia('(prefers-color-scheme: light)').matches){ document.body.classList.add("light"); }
+    // Startmodus: was der Besucher zuletzt hatte – sonst Systemvorgabe
+    const pref = localStorage.getItem("theme");
+    if (pref==="light" || (!pref && matchMedia('(prefers-color-scheme: light)').matches)) {
+      document.body.classList.add("light");
+    }
   </script>
 </body>
 </html>
