@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="de">
+<!DOCTYPE html>
+<html lang="de">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -30,7 +32,7 @@
     .head p{margin:4px 0;color:var(--muted)}
     .contact a{color:var(--accent);text-decoration:none;margin-right:10px}
     .actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}
-    .btn{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer;text-decoration:none}
+    .btn{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block}
     .ghost{background:var(--chip);color:var(--text);border:1px solid var(--border)}
     .row{display:grid;grid-template-columns:1fr;gap:16px;margin-top:18px}
     @media(min-width:860px){.row{grid-template-columns:1fr 1fr}}
@@ -70,7 +72,7 @@
       @page{margin:12mm}
       .sign{display:block!important}
     }
-    /* Optional Signatur im Print/Web (versteckt bis Datei existiert) */
+    /* Optional Signatur */
     .sign{display:none;text-align:right;margin-top:6px}
     .sign img{max-height:46px;opacity:.9}
   </style>
@@ -90,77 +92,77 @@
         </div>
       </div>
       <div class="actions">
-        <button class="btn" onclick="window.print()" data-de="📄 PDF herunterladen" data-en="📄 Download PDF">📄 PDF herunterladen</button>
-        <button class="btn ghost" onclick="downloadVCard()" data-de="📇 vCard" data-en="📇 vCard">📇 vCard</button>
+        <button class="btn" onclick="window.print()">📄 PDF herunterladen</button>
+        <button class="btn ghost" onclick="downloadVCard()">📇 vCard</button>
         <button class="btn ghost" onclick="toggleTheme()">🌙/☀️</button>
-        <button class="btn ghost" onclick="toggleLang()" data-de="DE/EN" data-en="DE/EN">DE/EN</button>
+        <button class="btn ghost" onclick="toggleLang()">DE/EN</button>
       </div>
     </header>
 
     <section>
-      <h2><span>🔎</span><span data-de="Schnellsuche" data-en="Quick Search">Schnellsuche</span></h2>
+      <h2>🔎 Schnellsuche</h2>
       <div class="search">
         <input id="q" type="search" placeholder="Begriffe eingeben … (z. B. Linux, Fressnapf)" />
       </div>
     </section>
 
     <section>
-      <h2><span>👤</span><span data-de="Über mich" data-en="About me">Über mich</span></h2>
+      <h2>👤 Über mich</h2>
       <ul>
-        <li data-de="Quereinsteiger mit starker IT-Affinität (Home-Server, Linux, Automatisierung, Webprojekte)" data-en="Career changer with strong IT affinity (home server, Linux, automation, web projects)">Quereinsteiger…</li>
-        <li data-de="Berufserfahrung im Verkauf, Beratung und Organisation" data-en="Experience in retail, customer advice and organization">Berufserfahrung…</li>
-        <li data-de="Ziel: langfristige Perspektive als Fachinformatiker Systemintegration" data-en="Goal: long-term role as IT specialist (system integration)">Ziel…</li>
+        <li>Quereinsteiger mit starker IT-Affinität (Home-Server, Linux, Automatisierung, Webprojekte)</li>
+        <li>Berufserfahrung im Verkauf, Beratung und Organisation</li>
+        <li>Ziel: langfristige Perspektive als Fachinformatiker Systemintegration</li>
       </ul>
     </section>
 
     <div class="row">
       <section>
-        <h2><span>💼</span><span data-de="Berufserfahrung" data-en="Work Experience">Berufserfahrung</span></h2>
-        <div class="timeline filter-scope" id="exp">
+        <h2>💼 Berufserfahrung</h2>
+        <div class="timeline filter-scope">
           <div class="entry item">
-            <h3>Fressnapf Holding SE – <span data-de="Verkäufer" data-en="Sales Assistant">Verkäufer</span></h3>
+            <h3>Fressnapf Holding SE – Verkäufer</h3>
             <p>01.03.2022 – 27.07.2022</p>
-            <p data-de="Kassiertätigkeit, Warenpflege, Beratung, Aktionen umsetzen" data-en="Cashier work, stock maintenance, customer advice, campaigns">…</p>
+            <p>Kassiertätigkeit, Warenpflege, Beratung, Aktionen umsetzen</p>
           </div>
           <div class="entry item">
-            <h3>Dehner Gartencenter GmbH &amp; Co. KG – <span data-de="Verkäufer" data-en="Sales Assistant">Verkäufer</span></h3>
+            <h3>Dehner Gartencenter GmbH &amp; Co. KG – Verkäufer</h3>
             <p>15.05.2021 – 31.08.2021</p>
-            <p data-de="Kassiertätigkeit, Auszeichnen &amp; Verräumen von Waren" data-en="Cashier duties, labelling & shelving">…</p>
+            <p>Kassiertätigkeit, Auszeichnen &amp; Verräumen von Waren</p>
           </div>
         </div>
       </section>
 
       <section>
-        <h2><span>🎓</span><span data-de="Bildung" data-en="Education">Bildung</span></h2>
-        <div class="timeline filter-scope" id="edu">
+        <h2>🎓 Bildung</h2>
+        <div class="timeline filter-scope">
           <div class="entry item">
-            <h3>Lidl Vertriebs-GmbH &amp; Co. KG – <span data-de="Abiturientenprogramm Vertrieb" data-en="Graduate Program Sales">Abiturientenprogramm Vertrieb</span></h3>
+            <h3>Lidl Vertriebs-GmbH &amp; Co. KG – Abiturientenprogramm Vertrieb</h3>
             <p>01.08.2022 – 31.10.2022</p>
           </div>
           <div class="entry item">
             <h3>Hochschule für öffentliche Verwaltung und Finanzen Ludwigsburg</h3>
-            <p>01.10.2021 – 28.02.2022 – <span data-de="Steuerverwaltung (LL.B.)" data-en="Tax Administration (LL.B.)">Steuerverwaltung (LL.B.)</span></p>
+            <p>01.10.2021 – 28.02.2022 – Steuerverwaltung (LL.B.)</p>
           </div>
           <div class="entry item">
             <h3>IB Berufliche Schulen Stuttgart-Mitte</h3>
-            <p>09.2019 – 07.2021 – <span data-de="Fachhochschulreife (Note 1,4)" data-en="University entrance qualification (grade 1.4)">Fachhochschulreife…</span></p>
+            <p>09.2019 – 07.2021 – Fachhochschulreife (Note 1,4)</p>
           </div>
         </div>
       </section>
     </div>
 
     <section>
-      <h2><span>💻</span><span data-de="IT-Projekte" data-en="IT Projects">IT-Projekte</span></h2>
-      <ul class="filter-scope" id="projects">
-        <li data-de="Betrieb eines eigenen Home-Servers (Linux, Backup, Netzwerkdienste)" data-en="Running a home server (Linux, backup, network services)">…</li>
-        <li data-de="VPN mit WireGuard für sicheren Remote-Zugriff" data-en="VPN with WireGuard for secure remote access">…</li>
-        <li data-de="Python-Skripte zur Automatisierung (Exposés, Blog-Unterstützung, kleine Tools)" data-en="Python scripts for automation (exposés, blog helpers, small tools)">…</li>
-        <li data-de="Eigener Web-Lebenslauf mit GitHub Pages" data-en="Web résumé with GitHub Pages">…</li>
+      <h2>💻 IT-Projekte</h2>
+      <ul class="filter-scope">
+        <li>Betrieb eines eigenen Home-Servers (Linux, Backup, Netzwerkdienste)</li>
+        <li>VPN mit WireGuard für sicheren Remote-Zugriff</li>
+        <li>Python-Skripte zur Automatisierung (Exposés, Blog-Unterstützung, kleine Tools)</li>
+        <li>Eigener Web-Lebenslauf mit GitHub Pages</li>
       </ul>
     </section>
 
     <section>
-      <h2><span>🛠</span><span data-de="Kompetenzen" data-en="Skills">Kompetenzen</span></h2>
+      <h2>🛠 Kompetenzen</h2>
       <ul class="filter-scope">
         <li><b>IT:</b> Linux-Server, Python, Netzwerke</li>
         <li><b>Soft Skills:</b> Organisation, Kundenberatung, Teamarbeit</li>
@@ -168,28 +170,28 @@
     </section>
 
     <section>
-      <h2><span>📑</span><span data-de="Zertifikate" data-en="Certificates">Zertifikate</span></h2>
+      <h2>📑 Zertifikate</h2>
       <ul class="filter-scope">
-        <li data-de="Fitnesstrainer C-Lizenz" data-en="Fitness Trainer C-License">…</li>
-        <li data-de="Weiterbildungen im Bereich Ökonomie" data-en="Further training in economics">…</li>
-        <li data-de="Geplante Zusatzqualifikationen: Linux, Python, Netzwerke" data-en="Planned qualifications: Linux, Python, networking">…</li>
+        <li>Fitnesstrainer C-Lizenz</li>
+        <li>Weiterbildungen im Bereich Ökonomie</li>
+        <li>Geplante Zusatzqualifikationen: Linux, Python, Netzwerke</li>
       </ul>
     </section>
 
     <section>
-      <h2><span>🌍</span><span data-de="Sprachen" data-en="Languages">Sprachen</span></h2>
+      <h2>🌍 Sprachen</h2>
       <ul class="filter-scope">
-        <li data-de="Deutsch – Muttersprache" data-en="German – native">…</li>
-        <li data-de="Englisch – gut (B2)" data-en="English – good (B2)">…</li>
+        <li>Deutsch – Muttersprache</li>
+        <li>Englisch – gut (B2)</li>
       </ul>
     </section>
 
     <section>
-      <h2><span>🌐</span><span data-de="Visitenkarte" data-en="Business Card">Visitenkarte</span></h2>
+      <h2>🌐 Visitenkarte</h2>
       <div class="qr-wrap">
-        <canvas id="qr" class="qr-canvas" width="160" height="160" aria-label="QR-Code zur Visitenkarte"></canvas>
+        <canvas id="qr" class="qr-canvas" width="160" height="160"></canvas>
         <p style="margin-top:10px;">
-          <a class="btn" href="https://laurinhuebner.github.io/resume/card.html" target="_blank" data-de="Karte öffnen" data-en="Open card">Karte öffnen</a>
+          <a class="btn" href="https://laurinhuebner.github.io/resume/card.html" target="_blank">Karte öffnen</a>
         </p>
       </div>
       <div class="sign">
@@ -200,65 +202,35 @@
     <footer>© <span id="year"></span> Laurin Hübner – Lebenslauf</footer>
   </div>
 
-  <!-- QR-Lib (leicht & lokal rendernd) -->
+  <!-- QR-Lib -->
   <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
   <script>
     const CARD_URL = "https://laurinhuebner.github.io/resume/card.html";
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    /* ---------- THEME ---------- */
     function renderQR(){
       const canvas = document.getElementById('qr');
       if(!canvas) return;
       const dark = getComputedStyle(document.body).getPropertyValue('--qr-dark').trim() || '#000';
       const light = getComputedStyle(document.body).getPropertyValue('--qr-light').trim() || '#fff';
-      QRCode.toCanvas(canvas, CARD_URL, { width:160, margin:1, color:{dark, light} }, (e)=>{ if(e) console.error(e); });
+      QRCode.toCanvas(canvas, CARD_URL, { width:160, margin:1, color:{dark, light} });
     }
     function toggleTheme(){
       document.body.classList.toggle("light");
       localStorage.setItem("theme", document.body.classList.contains("light") ? "light" : "dark");
       renderQR();
     }
+    function toggleLang(){
+      const curr = localStorage.getItem("lang") || "de";
+      localStorage.setItem("lang", curr==="de"?"en":"de");
+      location.reload();
+    }
     const pref = localStorage.getItem("theme");
     if (pref==="light" || (!pref && matchMedia('(prefers-color-scheme: light)').matches)) {
       document.body.classList.add("light");
     }
+    renderQR();
 
-    /* ---------- LANGUAGE ---------- */
-    function applyLang(lang){
-      document.documentElement.setAttribute("lang", lang);
-      document.querySelectorAll("[data-de]").forEach(el=>{
-        const txt = el.getAttribute(lang==="en"?"data-en":"data-de");
-        if(txt) el.textContent = txt;
-      });
-      localStorage.setItem("lang", lang);
-    }
-    function toggleLang(){
-      const curr = localStorage.getItem("lang") || "de";
-      applyLang(curr==="de"?"en":"de");
-    }
-    applyLang(localStorage.getItem("lang") || "de");
-
-    /* ---------- SEARCH / FILTER ---------- */
-    const q = document.getElementById('q');
-    q.addEventListener('input', ()=>{
-      const term = q.value.toLowerCase();
-      document.querySelectorAll('.filter-scope .item, .filter-scope li, .filter-scope p, .filter-scope h3').forEach(el=>{
-        const txt = el.innerText.toLowerCase();
-        const show = !term || txt.includes(term);
-        // Für Container-Einträge: am parent .entry entscheiden
-        const container = el.closest('.entry') || el;
-        container.style.display = show ? '' : 'none';
-      });
-    });
-
-    /* ---------- TIMELINE ANIMATION ---------- */
-    const io = new IntersectionObserver(entries=>{
-      entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('reveal'); });
-    }, {threshold:.2});
-    document.querySelectorAll('.entry').forEach(el=>io.observe(el));
-
-    /* ---------- vCard Download ---------- */
     function downloadVCard(){
       const vcf =
 `BEGIN:VCARD
@@ -278,14 +250,23 @@ END:VCARD`;
       setTimeout(()=>{ URL.revokeObjectURL(url); a.remove(); }, 0);
     }
 
-    /* ---------- INIT ---------- */
-    renderQR();
+    // Suche
+    const q = document.getElementById('q');
+    q.addEventListener('input', ()=>{
+      const term = q.value.toLowerCase();
+      document.querySelectorAll('.filter-scope .item, .filter-scope li, .filter-scope p, .filter-scope h3').forEach(el=>{
+        const txt = el.innerText.toLowerCase();
+        const show = !term || txt.includes(term);
+        const container = el.closest('.entry') || el;
+        container.style.display = show ? '' : 'none';
+      });
+    });
   </script>
 
   <!-- Mobile Sticky Bar -->
   <div class="sticky">
-    <a class="btn" href="tel:+49176623252304">📞 Anrufen</a>
-    <a class="btn" href="mailto:huebner@tuta.io">📧 E-Mail</a>
+    <a class="btn" href="tel:+49176623252304" role="button">📞 Anrufen</a>
+    <a class="btn" href="mailto:huebner@tuta.io" role="button">📧 E-Mail</a>
   </div>
 </body>
 </html>
