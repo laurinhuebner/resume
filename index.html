@@ -1,297 +1,264 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8">
   <title>Lebenslauf – Laurin Hübner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Lebenslauf von Laurin Hübner – IT, Automatisierung, Web, Server, KI-Tools.">
+  <link rel="icon" href="favicon.ico">
   <style>
     :root{
-      --bg:#0b0f14; --card:#121821; --text:#eaf2fb; --muted:#8aa0b7;
-      --accent:#4ea7ff; --border:#1f2937; --chip:#1b2430;
-      --qr-dark:#000000; --qr-light:#ffffff;
-      --shadow:0 8px 22px rgba(0,0,0,.35); --radius:16px;
+      --bg:#0d1117; --card:#161b22; --text:#c9d1d9; --muted:#8b949e;
+      --accent:#58a6ff; --border:#30363d; --chip:#1f2937; --ok:#2ea043; --bad:#f85149;
+      --paper:#ffffff; --ink:#111827;
     }
-    body.light{
-      --bg:#f7f9fc; --card:#ffffff; --text:#1a1a1a; --muted:#5c6b7a;
-      --accent:#0066cc; --border:#d1d9e0; --chip:#e4e9f0;
-      --qr-dark:#000000; --qr-light:#ffffff;
+    @media (prefers-color-scheme: light){
+      :root{ --bg:#f6f8fb; --card:#ffffff; --text:#111827; --muted:#6b7280; --accent:#2563eb; --border:#e5e7eb; --chip:#eef2f7; }
     }
     *{box-sizing:border-box}
-    body{
-      margin:0; font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
-      background:var(--bg); color:var(--text); transition:background .3s,color .3s;
+    html,body{height:100%}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{max-width:1000px;margin:0 auto;padding:24px}
+    header{
+      display:flex;align-items:center;gap:16px;margin-bottom:16px
     }
-    .container{max-width:980px;margin:0 auto;padding:20px}
-    header{display:grid;grid-template-columns:110px 1fr auto;gap:18px;align-items:center;margin-top:18px}
-    .avatar{width:110px;height:110px;border-radius:50%;overflow:hidden;border:2px solid var(--border);box-shadow:var(--shadow);background:#222;display:grid;place-items:center}
-    .avatar img{width:100%;height:100%;object-fit:cover}
-    .avatar .ph{color:var(--muted);font-weight:700}
-    .head h1{margin:0;font-size:34px}
-    .head p{margin:4px 0;color:var(--muted)}
-    .contact a{color:var(--accent);text-decoration:none;margin-right:10px}
-    .actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}
-    .btn{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block}
-    .ghost{background:var(--chip);color:var(--text);border:1px solid var(--border)}
-    .row{display:grid;grid-template-columns:1fr;gap:16px;margin-top:18px}
-    @media(min-width:860px){.row{grid-template-columns:1fr 1fr}}
-    section{
-      background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
-      padding:20px;margin:14px 0;box-shadow:var(--shadow)
+    .avatar{
+      width:84px;height:84px;border-radius:16px;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:700
     }
-    section h2{margin:0 0 12px;display:flex;align-items:center;font-size:20px}
-    section h2 span{margin-right:8px}
-    ul{margin:0;padding-left:20px}
-    .timeline{border-left:2px solid var(--accent);margin-left:10px;padding-left:16px}
-
-    /* Entries starten transparent -> werden via JS eingeblendet */
-    .entry{margin:0 0 16px;opacity:0;transform:translateY(8px);transition:opacity .5s ease,transform .5s ease}
-    .entry.reveal{opacity:1;transform:none}
-
-    .entry h3{margin:0;font-size:16px}
-    .entry p{margin:2px 0;color:var(--muted)}
-    .search{display:flex;gap:8px;align-items:center}
-    .search input{
-      width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--border);
-      background:var(--chip);color:var(--text)
+    .title h1{margin:0 0 6px 0;font-size:28px}
+    .title .sub{color:var(--muted)}
+    .actions{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+    .btn{
+      border:1px solid var(--border);background:var(--card);color:var(--text);padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:600
     }
-    .qr-wrap{text-align:center}
-    .qr-canvas{background:#fff;border-radius:12px;padding:8px;box-shadow:0 2px 8px rgba(0,0,0,.25)}
-    footer{text-align:center;color:var(--muted);padding:20px}
-
-    /* Sticky bottom bar (mobile) */
-    .sticky{
-      position:fixed;left:0;right:0;bottom:0;background:rgba(0,0,0,.35);
-      backdrop-filter:blur(6px);display:flex;gap:10px;justify-content:center;padding:10px
+    .btn.primary{background:var(--accent);border-color:transparent;color:#0b1320}
+    .btn.icon{display:inline-flex;align-items:center;gap:8px}
+    .grid{display:grid;grid-template-columns:280px 1fr;gap:20px}
+    @media(max-width:900px){ .grid{grid-template-columns:1fr} .actions{margin:0} }
+    .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px}
+    h2{margin:0 0 12px 0;font-size:20px}
+    .muted{color:var(--muted)}
+    .list{display:flex;flex-direction:column;gap:12px}
+    .item h3{margin:0 0 4px 0;font-size:16px}
+    .item .meta{color:var(--muted);font-size:14px}
+    .chips{display:flex;flex-wrap:wrap;gap:8px}
+    .chip{background:var(--chip);border:1px solid var(--border);padding:6px 10px;border-radius:999px;font-size:13px}
+    .cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media(max-width:900px){ .cols{grid-template-columns:1fr} }
+    .contact{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
+    .qrbox{
+      width:160px;height:160px;border-radius:12px;border:1px solid var(--border);background:var(--card);display:flex;align-items:center;justify-content:center;overflow:hidden
     }
-    .sticky .btn{padding:12px 16px}
-    @media(min-width:720px){.sticky{display:none}}
-
-    /* PRINT */
+    .qrbox img, .qrbox svg, .qrbox canvas{max-width:100%;max-height:100%}
+    footer{color:var(--muted);text-align:center;margin:24px 0}
+    /* Print/PDF */
     @media print{
-      body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-      .actions,.sticky,footer{display:none!important}
-      section{break-inside:avoid;page-break-inside:avoid}
-      /* Einträge immer sichtbar im Print */
-      .entry{opacity:1 !important; transform:none !important}
-      @page{margin:12mm}
-      .sign{display:block!important}
+      body{background:var(--paper);color:var(--ink)}
+      .wrap{padding:0}
+      header, .btn, .actions{display:none !important}
+      .card{border:1px solid #ddd;break-inside:avoid}
+      a{color:#0b61a4}
     }
-
-    /* Optional Signatur */
-    .sign{display:none;text-align:right;margin-top:6px}
-    .sign img{max-height:46px;opacity:.9}
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="wrap">
     <header>
-      <div class="avatar">
-        <img src="assets/profile.jpg" alt="Profilfoto" onerror="this.parentElement.innerHTML='<div class=&quot;ph&quot;>LH</div>'">
-      </div>
-      <div class="head">
+      <div class="avatar">LH</div>
+      <div class="title">
         <h1>Laurin Hübner</h1>
-        <p>Upstalsboomstraße 4 · 26721 Emden</p>
-        <div class="contact">
-          <a href="mailto:bewerbung@huebner.business">📧 bewerbung@huebner.business</a>
-          <a href="tel:+49176623252304">📞 0176 623252304</a>
-        </div>
+        <div class="sub">IT-interessiert · Linux & Python · Automatisierung & Server</div>
       </div>
       <div class="actions">
-        <button class="btn" onclick="window.print()">📄 PDF herunterladen</button>
-        <button class="btn ghost" onclick="downloadVCard()">📇 vCard</button>
-        <button class="btn ghost" onclick="toggleTheme()">🌙/☀️</button>
-        <button class="btn ghost" onclick="toggleLang()">DE/EN</button>
+        <a class="btn icon" href="mailto:bewerbung@huebner.business" title="E-Mail senden">✉️ E-Mail</a>
+        <a class="btn icon" href="tel:+49" title="Anrufen">📞 Anrufen</a>
+        <button class="btn" onclick="window.print()">PDF herunterladen</button>
+        <button class="btn icon" id="themeToggle" title="Theme umschalten">🌙</button>
       </div>
     </header>
 
-    <section>
-      <h2>🔎 Schnellsuche</h2>
-      <div class="search">
-        <input id="q" type="search" placeholder="Begriffe eingeben … (z. B. Linux, Fressnapf)" />
-      </div>
-    </section>
-
-    <section>
-      <h2>👤 Über mich</h2>
-      <ul>
-        <li>Quereinsteiger mit starker IT-Affinität (Home-Server, Linux, Automatisierung, Webprojekte)</li>
-        <li>Berufserfahrung im Verkauf, Beratung und Organisation</li>
-        <li>Ziel: langfristige Perspektive als Fachinformatiker Systemintegration</li>
-      </ul>
-    </section>
-
-    <div class="row">
-      <section>
-        <h2>💼 Berufserfahrung</h2>
-        <div class="timeline filter-scope">
-          <div class="entry item">
-            <h3>Fressnapf Holding SE – Verkäufer</h3>
-            <p>01.03.2022 – 27.07.2022</p>
-            <p>Kassiertätigkeit, Warenpflege, Beratung, Aktionen umsetzen</p>
-          </div>
-          <div class="entry item">
-            <h3>Dehner Gartencenter GmbH &amp; Co. KG – Verkäufer</h3>
-            <p>15.05.2021 – 31.08.2021</p>
-            <p>Kassiertätigkeit, Auszeichnen &amp; Verräumen von Waren</p>
+    <div class="grid">
+      <!-- Linke Spalte -->
+      <aside class="cols">
+        <div class="card">
+          <h2>Kontakt</h2>
+          <div class="contact">
+            <div>
+              <div>📍 Upstalsboomstraße 4, 26721 Emden</div>
+              <div>✉️ <a href="mailto:bewerbung@huebner.business">bewerbung@huebner.business</a></div>
+              <div>🌐 <a href="https://laurinhuebner.github.io/resume/" target="_blank" rel="noopener">laurinhuebner.github.io/resume</a></div>
+              <div>💼 <a href="https://github.com/laurinhuebner" target="_blank" rel="noopener">github.com/laurinhuebner</a></div>
+              <div style="margin-top:8px"><a class="btn primary" href="card.html" target="_blank" rel="noopener">Visitenkarte öffnen</a></div>
+            </div>
+            <div class="qrbox">
+              <!-- 🔳 Optional: Deinen bestehenden Inline-QR hier einfügen (ersetzt den Fallback).
+                   Beispiel: <svg>…</svg> oder <canvas id="qr"></canvas> -->
+              <!-- Fallback: minimalistisches QR-Label -->
+              <a href="card.html" title="Visitenkarte">
+                <img alt="QR zur Visitenkarte" src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=https%3A%2F%2Flaurinhuebner.github.io%2Fresume%2Fcard.html">
+              </a>
+            </div>
           </div>
         </div>
-      </section>
 
+        <div class="card">
+          <h2>Skills</h2>
+          <div class="chips">
+            <span class="chip">Linux (Debian)</span>
+            <span class="chip">Python · Flask</span>
+            <span class="chip">Git & GitHub</span>
+            <span class="chip">GitHub Actions</span>
+            <span class="chip">Systemd Services</span>
+            <span class="chip">Netzwerkgrundlagen</span>
+            <span class="chip">WireGuard</span>
+            <span class="chip">HTML & CSS</span>
+            <span class="chip">Automatisierung</span>
+            <span class="chip">Home-Server</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Zertifikate</h2>
+          <ul class="list">
+            <li class="item">
+              <h3>IT-Grundlagen & Linux (Eigenstudium)</h3>
+              <div class="meta">2024–2025 · Server, Dienste, Systemd, SSH</div>
+            </li>
+            <li class="item">
+              <h3>Git & GitHub (Eigenstudium)</h3>
+              <div class="meta">Workflows, Actions, GitHub Pages</div>
+            </li>
+            <!-- Wenn du offizielle Zertifikate hast, hier ergänzen -->
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Rechte Spalte -->
       <section>
-        <h2>🎓 Bildung</h2>
-        <div class="timeline filter-scope">
-          <div class="entry item">
-            <h3>Lidl Vertriebs-GmbH &amp; Co. KG – Abiturientenprogramm Vertrieb</h3>
-            <p>01.08.2022 – 31.10.2022</p>
-          </div>
-          <div class="entry item">
-            <h3>Hochschule für öffentliche Verwaltung und Finanzen Ludwigsburg</h3>
-            <p>01.10.2021 – 28.02.2022 – Steuerverwaltung (LL.B.)</p>
-          </div>
-          <div class="entry item">
-            <h3>IB Berufliche Schulen Stuttgart-Mitte</h3>
-            <p>09.2019 – 07.2021 – Fachhochschulreife (Note 1,4)</p>
-          </div>
+        <div class="card">
+          <h2>Über mich</h2>
+          <p>Ich bin begeisterter IT-Anwender mit Fokus auf <strong>Linux-Servern, Python & Automatisierung</strong>.  
+             Zuhause betreibe ich einen eigenen <strong>Home-Server</strong> (Services, Monitoring, Netzwerktools) und setze Projekte um, die praktische Probleme lösen – von Web-Dashboards bis zu Bewerbungs-Automatisierung.</p>
+        </div>
+
+        <div class="card" id="projects">
+          <h2>Projekte (Auswahl)</h2>
+          <ul class="list">
+            <li class="item">
+              <h3>Server-Dashboard</h3>
+              <div class="meta">Web-Dashboard auf Debian mit System- & Netzwerk-Monitoring, Docker-Übersicht, Log-Tail, Dienste-Status</div>
+              <div><a href="https://github.com/laurinhuebner/server-dashboard" target="_blank" rel="noopener">Code ansehen</a></div>
+            </li>
+            <li class="item">
+              <h3>LAN-Scanner</h3>
+              <div class="meta">Subnetz-Scan (Hosts, Standard-Ports), Reverse-DNS, SQLite-Persistenz; ins Dashboard eingebettet</div>
+              <div><a href="https://github.com/laurinhuebner/lan-scanner" target="_blank" rel="noopener">Code ansehen</a></div>
+            </li>
+            <li class="item">
+              <h3>ads2letter</h3>
+              <div class="meta">KI-gestütztes Tool, das Jobausschreibungen in individuelle Bewerbungsanschreiben umwandelt</div>
+              <div><a href="https://github.com/laurinhuebner/ads2letter" target="_blank" rel="noopener">Code ansehen</a></div>
+            </li>
+            <li class="item">
+              <h3>ads2letter-WebApp (Android)</h3>
+              <div class="meta">Einfache APK, um ads2letter im Heimnetz komfortabel ohne Browser zu nutzen</div>
+              <div><a href="https://github.com/laurinhuebner/ads2letter-webapp" target="_blank" rel="noopener">Code ansehen</a></div>
+            </li>
+            <li class="item">
+              <h3>Lebenslauf Online</h3>
+              <div class="meta">Interaktive CV-Seite auf GitHub Pages mit QR-Code-Visitenkarte</div>
+              <div><a href="https://laurinhuebner.github.io/resume/" target="_blank" rel="noopener">Online ansehen</a> · <a href="https://github.com/laurinhuebner/resume" target="_blank" rel="noopener">Code</a></div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2>Berufserfahrung</h2>
+          <ul class="list">
+            <li class="item">
+              <h3>Verkäufer – Fressnapf Holding SE</h3>
+              <div class="meta">01.03.2022 – 27.07.2022</div>
+              <p class="muted">Kassieren (Scannerkassen), Kassenabschluss/-kontrolle, Qualitätssicherung, Ware pflegen/präsentieren/verräumen, Verkauf & Kundenberatung, Umsetzung von Aktionen & Werbemaßnahmen.</p>
+            </li>
+            <li class="item">
+              <h3>Verkäufer – Dehner Gartencenter GmbH & Co. KG</h3>
+              <div class="meta">15.05.2021 – 31.08.2021</div>
+              <p class="muted">Auszeichnen & Verräumen der Waren, Kassiertätigkeit.</p>
+            </li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2>Bildung</h2>
+          <ul class="list">
+            <li class="item">
+              <h3>Lidl Vertriebs-GmbH & Co. KG – Abiturientenprogramm Vertrieb</h3>
+              <div class="meta">01.08.2022 – 31.10.2022</div>
+            </li>
+            <li class="item">
+              <h3>Hochschule f. öffentliche Verwaltung & Finanzen Ludwigsburg – Steuerverwaltung (LL.B.)</h3>
+              <div class="meta">01.10.2021 – 28.02.2022</div>
+            </li>
+            <li class="item">
+              <h3>IB Berufliche Schulen Stuttgart-Mitte – Fachhochschulreife (1,4)</h3>
+              <div class="meta">09.2019 – 07.2021</div>
+            </li>
+          </ul>
         </div>
       </section>
     </div>
 
-    <section>
-      <h2>💻 IT-Projekte</h2>
-      <ul class="filter-scope">
-        <li>Betrieb eines eigenen Home-Servers (Linux, Backup, Netzwerkdienste)</li>
-        <li>VPN mit WireGuard für sicheren Remote-Zugriff</li>
-        <li>Python-Skripte zur Automatisierung (Exposés, Blog-Unterstützung, kleine Tools)</li>
-        <li>Eigener Web-Lebenslauf mit GitHub Pages</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>🛠 Kompetenzen</h2>
-      <ul class="filter-scope">
-        <li><b>IT:</b> Linux-Server, Python, Netzwerke</li>
-        <li><b>Soft Skills:</b> Organisation, Kundenberatung, Teamarbeit</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>📑 Zertifikate</h2>
-      <ul class="filter-scope">
-        <li>Fitnesstrainer C-Lizenz</li>
-        <li>Weiterbildungen im Bereich Ökonomie</li>
-        <li>Geplante Zusatzqualifikationen: Linux, Python, Netzwerke</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>🌍 Sprachen</h2>
-      <ul class="filter-scope">
-        <li>Deutsch – Muttersprache</li>
-        <li>Englisch – gut (B2)</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>🌐 Visitenkarte</h2>
-      <div class="qr-wrap">
-        <canvas id="qr" class="qr-canvas" width="160" height="160"></canvas>
-        <p style="margin-top:10px;">
-          <a class="btn" href="https://laurinhuebner.github.io/resume/card.html" target="_blank">Karte öffnen</a>
-        </p>
-      </div>
-      <div class="sign">
-        <img src="assets/signature.png" alt="Signatur" onerror="this.parentElement.style.display='none'">
-      </div>
-    </section>
-
-    <footer>© <span id="year"></span> Laurin Hübner – Lebenslauf</footer>
+    <footer>© <span id="year"></span> Laurin Hübner · Diese Seite ist für Ausdruck/PDF optimiert</footer>
   </div>
 
-  <!-- QR-Lib -->
-  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
   <script>
-    const CARD_URL = "https://laurinhuebner.github.io/resume/card.html";
+    // Jahr
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    function renderQR(){
-      const canvas = document.getElementById('qr');
-      if(!canvas) return;
-      const dark = getComputedStyle(document.body).getPropertyValue('--qr-dark').trim() || '#000';
-      const light = getComputedStyle(document.body).getPropertyValue('--qr-light').trim() || '#fff';
-      QRCode.toCanvas(canvas, CARD_URL, { width:160, margin:1, color:{dark, light} });
+    // Theme Toggle
+    const root = document.documentElement;
+    const btn = document.getElementById('themeToggle');
+    const pref = localStorage.getItem('theme');
+    if (pref === 'dark' || (!pref && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      root.classList.add('dark'); btn.textContent = '☀️';
     }
-    function toggleTheme(){
-      document.body.classList.toggle("light");
-      localStorage.setItem("theme", document.body.classList.contains("light") ? "light" : "dark");
-      renderQR();
-    }
-    function toggleLang(){
-      const curr = localStorage.getItem("lang") || "de";
-      localStorage.setItem("lang", curr==="de"?"en":"de");
-      location.reload();
-    }
-    const pref = localStorage.getItem("theme");
-    if (pref==="light" || (!pref && matchMedia('(prefers-color-scheme: light)').matches)) {
-      document.body.classList.add("light");
-    }
-    renderQR();
-
-    // vCard
-    function downloadVCard(){
-      const vcf =
-`BEGIN:VCARD
-VERSION:3.0
-N:Hübner;Laurin;;;
-FN:Laurin Hübner
-EMAIL;type=INTERNET;type=HOME;type=pref:bewerbung@huebner.business
-TEL;type=CELL;type=VOICE;type=pref:+49 176 623252304
-ADR;type=HOME:;;Upstalsboomstraße 4;Emden;;26721;Deutschland
-URL:https://laurinhuebner.github.io/resume/
-END:VCARD`;
-      const blob = new Blob([vcf], {type:"text/vcard;charset=utf-8"});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = "Laurin_Huebner.vcf";
-      document.body.appendChild(a); a.click();
-      setTimeout(()=>{ URL.revokeObjectURL(url); a.remove(); }, 0);
-    }
-
-    // Suche
-    const q = document.getElementById('q');
-    q.addEventListener('input', ()=>{
-      const term = q.value.toLowerCase();
-      document.querySelectorAll('.filter-scope .item, .filter-scope li, .filter-scope p, .filter-scope h3').forEach(el=>{
-        const txt = el.innerText.toLowerCase();
-        const show = !term || txt.includes(term);
-        const container = el.closest('.entry') || el;
-        container.style.display = show ? '' : 'none';
-      });
+    btn.addEventListener('click', () => {
+      root.classList.toggle('dark');
+      const dark = root.classList.contains('dark');
+      localStorage.setItem('theme', dark ? 'dark' : 'light');
+      btn.textContent = dark ? '☀️' : '🌙';
     });
 
-    // Timeline-Animation (fix)
-    function revealWithObserver(){
-      if (!('IntersectionObserver' in window)) {
-        // Fallback: sofort sichtbar
-        document.querySelectorAll('.entry').forEach(el=>el.classList.add('reveal'));
-        return;
-      }
-      const io = new IntersectionObserver(entries=>{
-        entries.forEach(e=>{
-          if(e.isIntersecting){
-            e.target.classList.add('reveal');
-            io.unobserve(e.target);
-          }
-        });
-      }, {threshold:0.05});
-      document.querySelectorAll('.entry').forEach(el=>io.observe(el));
-    }
-    revealWithObserver();
+    // Optional: Wenn du bereits ein Inline-QR-Script verwendest, kannst du es hier initialisieren.
+    // Beispiel-Hook:
+    // generateQR('card.html', document.querySelector('.qrbox'));
   </script>
 
-  <!-- Mobile Sticky Bar -->
-  <div class="sticky">
-    <a class="btn" href="tel:+49176623252304" role="button">📞 Anrufen</a>
-    <a class="btn" href="mailto:bewerbung@huebner.business" role="button">📧 E-Mail</a>
-  </div>
+  <!-- Strukturierte Daten für bessere Darstellung in Suchmaschinen -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Person",
+    "name":"Laurin Hübner",
+    "email":"mailto:bewerbung@huebner.business",
+    "url":"https://laurinhuebner.github.io/resume/",
+    "address":{
+      "@type":"PostalAddress",
+      "streetAddress":"Upstalsboomstraße 4",
+      "postalCode":"26721",
+      "addressLocality":"Emden",
+      "addressCountry":"DE"
+    },
+    "sameAs":[
+      "https://github.com/laurinhuebner"
+    ],
+    "knowsAbout":[
+      "Linux (Debian)", "Python", "Flask", "GitHub", "GitHub Actions",
+      "Systemd", "WireGuard", "Networking", "Automation", "Web Development"
+    ]
+  }
+  </script>
 </body>
 </html>
