@@ -1,4 +1,4 @@
-name: Build CV PDF (Playwright → Commit/PR)
+name: Build CV PDF (Playwright + Fallback)
 
 on:
   workflow_dispatch:
@@ -21,8 +21,8 @@ jobs:
   build-pdf:
     runs-on: ubuntu-latest
     permissions:
-      contents: write        # für Commit/PR
-      pull-requests: write   # für PR-Erstellung
+      contents: write
+      pull-requests: write
     steps:
       - name: Checkout (volle Historie)
         uses: actions/checkout@v4
@@ -30,12 +30,17 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.event.inputs.target_branch || github.ref_name }}
 
-      - name: Ermittel Branch & index.html
+      - name: Repo-Layout (Debug)
+        run: |
+          echo "::group::tree"
+          ls -la
+          [ -d resume ] && (echo "--- resume/ ---" && ls -la resume)
+          echo "::endgroup::"
+
+      - name: Branch & index.html ermitteln
         id: setup
         run: |
           BRANCH="${{ github.event.inputs.target_branch || github.ref_name }}"
-          echo "BRANCH=$BRANCH" >> $GITHUB_ENV
-          # index.html finden/setzen
           if [ -n "${{ github.event.inputs.index_path }}" ]; then
             IDX="${{ github.event.inputs.index_path }}"
           elif [ -f "index.html" ]; then
@@ -43,12 +48,13 @@ jobs:
           elif [ -f "resume/index.html" ]; then
             IDX="resume/index.html"
           else
-            echo "❌ index.html nicht gefunden (weder ./index.html noch ./resume/index.html)."
+            echo "❌ index.html nicht gefunden."
             exit 1
           fi
+          echo "BRANCH=$BRANCH" >> $GITHUB_ENV
           echo "INDEX_PATH=$IDX" >> $GITHUB_ENV
-          echo "Verwende Branch: $BRANCH"
-          echo "Nutze Datei:    $IDX"
+          echo "→ Branch: $BRANCH"
+          echo "→ index:  $IDX"
 
       - name: Node einrichten
         uses: actions/setup-node@v4
@@ -61,7 +67,7 @@ jobs:
           npm i -D playwright@1.46.1
           npx playwright install --with-deps chromium
 
-      - name: Export-Script schreiben
+      - name: Export-Script (Playwright) schreiben
         run: |
           mkdir -p scripts assets
           cat > scripts/export-pdf.mjs <<'EOF'
@@ -71,55 +77,81 @@ jobs:
 
           const indexPath = process.env.INDEX_PATH || "index.html";
           const fileUrl = "file://" + resolve(indexPath);
-          const outDir = resolve("assets");
+          const outDir = "assets";
           const outPath = join(outDir, "Laurin_Huebner_CV.pdf");
           if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
 
           const browser = await chromium.launch({
-            args: [
-              "--no-sandbox",
-              "--disable-setuid-sandbox",
-              "--allow-file-access-from-files",
-              "--disable-web-security",
-            ],
+            args: ["--no-sandbox","--disable-setuid-sandbox","--allow-file-access-from-files","--disable-web-security"]
           });
 
           try {
             const ctx = await browser.newContext({ colorScheme: "light" });
             const page = await ctx.newPage();
 
-            // Für PDF: Druck-CSS + störende UI ausblenden
+            // Debug: Console/Netzwerk-Fehler mitschreiben
+            page.on("console", m => console.log("[console]", m.type(), m.text()));
+            page.on("pageerror", e => console.log("[pageerror]", e.message));
+            page.on("requestfailed", r => console.log("[requestfailed]", r.url(), r.failure()?.errorText));
+
             await page.emulateMedia({ media: "print" });
             await page.addStyleTag({ content: `
-              .actions, #themeToggle, #pdfAuto { display: none !important; }
-              .qrbox img { display: none !important; } /* verhindert externe Fetches im PDF */
+              .actions, #themeToggle, #pdfAuto { display:none !important; }
+              .qrbox img { display:none !important; }
             `});
 
-            await page.goto(fileUrl, { waitUntil: "load", timeout: 120000 });
+            await page.goto(fileUrl, { waitUntil: "load", timeout: 60000 });
 
             await page.pdf({
               path: outPath,
               format: "A4",
               printBackground: true,
-              margin: { top: "10mm", right: "10mm", bottom: "10mm", left: "10mm" },
+              margin: { top: "10mm", right: "10mm", bottom: "10mm", left: "10mm" }
             });
 
-            console.log("✅ PDF geschrieben:", outPath);
+            if (!fs.existsSync(outPath) || fs.statSync(outPath).size < 10240) {
+              throw new Error("PDF nicht erstellt oder zu klein");
+            }
+            console.log("✅ PDF OK:", outPath, fs.statSync(outPath).size, "bytes");
           } finally {
             await browser.close();
           }
           EOF
 
-      - name: PDF erzeugen
+      - name: PDF erzeugen (Playwright)
         env:
           INDEX_PATH: ${{ env.INDEX_PATH }}
-        run: node scripts/export-pdf.mjs
+        run: |
+          set -e
+          node scripts/export-pdf.mjs
+          echo "::group::assets"
+          ls -la assets || true
+          echo "::endgroup::"
 
-      - name: PDF als Artifact hochladen
+      - name: Fallback installieren (wkhtmltopdf)
+        if: ${{ failure() }}
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wkhtmltopdf
+
+      - name: PDF erzeugen (Fallback wkhtmltopdf)
+        if: ${{ failure() }}
+        env:
+          INDEX_PATH: ${{ env.INDEX_PATH }}
+        run: |
+          mkdir -p assets
+          IN="file://$(realpath "$INDEX_PATH")"
+          OUT="assets/Laurin_Huebner_CV.pdf"
+          echo "Fallback: wkhtmltopdf $IN → $OUT"
+          wkhtmltopdf --enable-local-file-access "$IN" "$OUT"
+          ls -la assets
+
+      - name: Artifact hochladen (alle PDFs aus assets/)
         uses: actions/upload-artifact@v4
         with:
           name: Laurin_Huebner_CV
-          path: assets/Laurin_Huebner_CV.pdf
+          path: assets/*.pdf
+          if-no-files-found: error
 
       - name: Versuch: Direkt committen
         id: commit
@@ -127,15 +159,15 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add assets/Laurin_Huebner_CV.pdf || true
+          git add assets/*.pdf || true
           if git diff --cached --quiet; then
-            echo "Kein Commit nötig (Datei unverändert)."
+            echo "Kein Commit nötig (keine Änderungen)."
             exit 0
           fi
           git commit -m "chore(pdf): rebuild CV PDF"
           git push origin "${BRANCH}"
 
-      - name: Fallback: Pull-Request erstellen (wenn Push blockiert)
+      - name: Fallback: Pull-Request erstellen
         if: steps.commit.outcome == 'failure'
         uses: peter-evans/create-pull-request@v6
         with:
@@ -144,4 +176,4 @@ jobs:
           title: "PDF aktualisieren"
           body: "Automatisch erzeugte PDF hinzugefügt/aktualisiert."
           add-paths: |
-            assets/Laurin_Huebner_CV.pdf
+            assets/*.pdf
