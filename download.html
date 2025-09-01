@@ -1,73 +1,96 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>CV als PDF speichern – Laurin Hübner</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lebenslauf – Laurin Hübner (PDF)</title>
+  <link rel="stylesheet" href="style.css">
   <style>
-    body{font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;margin:24px;line-height:1.5}
-    .box{max-width:720px;margin:auto}
-    .log{white-space:pre-wrap;background:#0b1220;color:#e5e7eb;padding:12px;border-radius:10px}
-    button{padding:10px 14px;border-radius:10px;border:0;background:#2563eb;color:#fff;font-weight:600}
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 2rem;
+      background: #fff;
+      color: #000;
+    }
+    h1, h2 { margin-top: 0; }
+    .section {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #ddd;
+    }
+    .skills span {
+      display: inline-block;
+      background: #eaeaea;
+      margin: 3px;
+      padding: 4px 8px;
+      border-radius: 12px;
+    }
+    @media print {
+      a::after { content: ""; } /* keine URLs anhängen */
+    }
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
 </head>
 <body>
-  <div class="box">
-    <h1>PDF-Export deines Lebenslaufs</h1>
-    <p>Tippe auf „PDF erstellen“ – es wird eine helle PDF <b>Laurin_Huebner_CV.pdf</b> erzeugt.</p>
-    <p><button id="go">PDF erstellen</button></p>
-    <div id="out" class="log" style="display:none"></div>
+  <h1>Laurin Hübner</h1>
+  <p><b>Ziel:</b> Ausbildung Fachinformatiker Systemintegration</p>
+
+  <div class="section">
+    <h2>Kontakt</h2>
+    <p>📍 Upstalsboomstraße 4, 26721 Emden</p>
+    <p>📧 <a href="mailto:bewerbung@huebner.business">bewerbung@huebner.business</a></p>
+    <p>🌐 <a href="https://laurinhuebner.github.io/resume/">laurinhuebner.github.io/resume</a></p>
+    <p>💻 <a href="https://github.com/laurinhuebner">github.com/laurinhuebner</a></p>
   </div>
 
-  <script>
-    const log = (m)=>{const o=document.getElementById('out');o.style.display='block';o.textContent+=m+"\n";};
+  <div class="section skills">
+    <h2>Skills</h2>
+    <span>Linux (Debian)</span>
+    <span>Python - Flask</span>
+    <span>Git & GitHub</span>
+    <span>GitHub Actions</span>
+    <span>Systemd Services</span>
+    <span>Netzwerkgrundlagen</span>
+    <span>WireGuard</span>
+    <span>HTML & CSS</span>
+    <span>Automatisierung</span>
+    <span>Home-Server</span>
+  </div>
 
-    function injectLightTheme(wrapper){
-      // 1) CSS-Overrides für Light Mode (überschreibt :root-Variablen deiner Seite)
-      const style = document.createElement('style');
-      style.textContent = `
-        :root{
-          --bg:#f6f8fb; --card:#ffffff; --text:#111827; --muted:#6b7280;
-          --accent:#2563eb; --border:#e5e7eb; --chip:#eef2f7;
-          --paper:#ffffff; --ink:#111827;
-        }
-        html,body{background:#ffffff !important; color:#111827 !important;}
-        .actions, #themeToggle, #pdfAuto { display:none !important; }
-      `;
-      // Ganz oben einfügen, damit es Vorrang hat
-      wrapper.prepend(style);
-    }
+  <div class="section">
+    <h2>Zertifikate</h2>
+    <ul>
+      <li><b>IT-Grundlagen & Linux (Eigenstudium)</b><br>2024–2025 · Server, Dienste, Systemd, SSH</li>
+      <li><b>Git & GitHub (Eigenstudium)</b><br>Workflows, Actions, GitHub Pages</li>
+    </ul>
+  </div>
 
-    async function makePdf(){
-      try{
-        log("Lade index.html …");
-        const res = await fetch('index.html', {cache:'no-cache'});
-        const html = await res.text();
+  <div class="section">
+    <h2>Über mich</h2>
+    <p>
+      Ich bin begeisterter IT-Anwender mit Fokus auf <b>Linux-Servern, Python & Automatisierung</b>.
+      Zuhause betreibe ich einen eigenen <b>Home-Server</b> (Services, Monitoring, Netzwerktools)
+      und setze Projekte um, die praktische Probleme lösen – von Web-Dashboards bis zu Bewerbungs-Automatisierung.
+    </p>
+  </div>
 
-        // Als isolierten Container aufbauen
-        const wrapper = document.createElement('div');
-        wrapper.innerHTML = html;
+  <div class="section">
+    <h2>Projekte (Auswahl)</h2>
+    <ul>
+      <li><b>Server-Dashboard</b><br>Web-Dashboard auf Debian mit System- & Netzwerk-Monitoring, Docker-Übersicht, Log-Tail, Dienste-Status</li>
+      <li><b>LAN-Scanner</b><br>Subnetz-Scan (Hosts, Ports), Reverse-DNS, SQLite-Persistenz; ins Dashboard eingebettet</li>
+      <li><b>ads2letter</b><br>KI-Tool für Bewerbungsanschreiben</li>
+      <li><b>ads2letter-WebApp (Android)</b><br>Einfache APK zum komfortablen Generieren von Anschreiben</li>
+      <li><b>Lebenslauf Online</b><br>Interaktive CV-Seite auf GitHub Pages</li>
+    </ul>
+  </div>
 
-        // Light-Theme erzwingen + UI säubern
-        injectLightTheme(wrapper);
-
-        log("Rendere PDF (Hellmodus) …");
-        await html2pdf().set({
-          margin:[10,10,10,10],
-          filename:'Laurin_Huebner_CV.pdf',
-          image:{ type:'jpeg', quality:0.98 },
-          html2canvas:{ scale:2, useCORS:true, backgroundColor:'#ffffff' },
-          jsPDF:{ unit:'mm', format:'a4', orientation:'portrait' },
-          pagebreak:{ mode:['css','legacy'] }
-        }).from(wrapper).save();
-
-        log("✅ Fertig. Die PDF wurde gespeichert.");
-      }catch(e){
-        log("❌ Fehler: "+e);
-      }
-    }
-    document.getElementById('go').addEventListener('click', makePdf);
-  </script>
+  <div class="section">
+    <h2>Berufserfahrung</h2>
+    <ul>
+      <li><b>Verkäufer – Fressnapf</b> (03/2022 – 07/2022)</li>
+      <li><b>Verkäufer – Dehner</b> (05/2021 – 08/2021)</li>
+    </ul>
+  </div>
 </body>
 </html>
