@@ -1,0 +1,45 @@
+name: Build CV PDF
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "index.html"
+      - ".github/workflows/generate-pdf.yml"
+      - "scripts/export-pdf.js"
+
+jobs:
+  build-pdf:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # erlaubt Commit zurück ins Repo
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Puppeteer
+        run: |
+          npm init -y
+          npm i puppeteer@22
+
+      - name: Build PDF from index.html
+        run: |
+          mkdir -p scripts assets
+          node scripts/export-pdf.js
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Laurin_Huebner_CV
+          path: assets/Laurin_Huebner_CV.pdf
+
+      - name: Commit PDF back to repo
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore(pdf): rebuild CV PDF"
+          file_pattern: assets/Laurin_Huebner_CV.pdf
