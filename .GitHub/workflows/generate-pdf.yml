@@ -1,21 +1,44 @@
-name: Build CV PDF
+name: Build CV PDF (Puppeteer)
 
 on:
   workflow_dispatch:
   push:
     paths:
       - "index.html"
-      - ".github/workflows/generate-pdf.yml"
-      - "scripts/export-pdf.js"
+      - "resume/index.html"
+      - ".github/workflows/build-cv-pdf.yml"
 
 jobs:
   build-pdf:
     runs-on: ubuntu-latest
     permissions:
-      contents: write   # erlaubt Commit zurück ins Repo
+      contents: write   # erlaubt Commit zurück ins Repo (Repo-Setting muss Write erlauben)
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Show repo layout (debug)
+        run: |
+          echo "::group::Tree"
+          ls -la
+          echo
+          if [ -d resume ]; then
+            echo "--- resume/ ---"
+            ls -la resume || true
+          fi
+          echo "::endgroup::"
+
+      - name: Locate index.html
+        run: |
+          if [ -f "index.html" ]; then
+            echo "INDEX_PATH=index.html" >> $GITHUB_ENV
+          elif [ -f "resume/index.html" ]; then
+            echo "INDEX_PATH=resume/index.html" >> $GITHUB_ENV
+          else
+            echo "❌ index.html nicht gefunden (weder ./index.html noch ./resume/index.html)."
+            exit 1
+          fi
+          echo "Gefundene Datei: $INDEX_PATH"
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -27,10 +50,74 @@ jobs:
           npm init -y
           npm i puppeteer@22
 
-      - name: Build PDF from index.html
+      - name: Write export script
+        env:
+          INDEX_PATH: ${{ env.INDEX_PATH }}
         run: |
           mkdir -p scripts assets
-          node scripts/export-pdf.js
+          cat > scripts/export-pdf.js <<'EOF'
+          const fs = require("fs");
+          const path = require("path");
+          const puppeteer = require("puppeteer");
+
+          (async () => {
+            const indexPath = process.env.INDEX_PATH || "index.html";
+            const fileUrl = "file://" + path.resolve(indexPath);
+            const outDir = path.resolve("assets");
+            const outPath = path.join(outDir, "Laurin_Huebner_CV.pdf");
+            if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
+
+            const browser = await puppeteer.launch({
+              headless: "new",
+              args: [
+                "--no-sandbox",
+                "--disable-setuid-sandbox",
+                "--allow-file-access-from-files",
+                "--disable-web-security",
+                "--single-process"
+              ],
+              defaultViewport: { width: 1240, height: 1754, deviceScaleFactor: 2 }
+            });
+
+            try {
+              const page = await browser.newPage();
+
+              // Für PDF: print-CSS nutzen und dark-mode vermeiden
+              await page.emulateMediaType("print");
+              await page.addStyleTag({ content: `
+                /* Externe QR-Bilder für PDF ausblenden, damit networkidle nicht hängt */
+                .qrbox img { display: none !important; }
+              `});
+
+              // Seite laden – nicht auf networkidle warten (externe Ressourcen)
+              await page.goto(fileUrl, { waitUntil: "load", timeout: 120000 });
+
+              // Sicherheitshalber Buttons im PDF ausblenden
+              await page.addStyleTag({ content: `
+                .actions, #themeToggle, #pdfAuto { display: none !important; }
+              `});
+
+              await page.pdf({
+                path: outPath,
+                format: "A4",
+                printBackground: true,
+                margin: { top: "10mm", right: "10mm", bottom: "10mm", left: "10mm" }
+              });
+
+              console.log("PDF geschrieben:", outPath);
+            } finally {
+              await browser.close();
+            }
+          })().catch(err => {
+            console.error("PDF-Export fehlgeschlagen:", err);
+            process.exit(1);
+          });
+          EOF
+
+      - name: Build PDF
+        env:
+          INDEX_PATH: ${{ env.INDEX_PATH }}
+        run: node scripts/export-pdf.js
 
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v4
@@ -38,8 +125,11 @@ jobs:
           name: Laurin_Huebner_CV
           path: assets/Laurin_Huebner_CV.pdf
 
-      - name: Commit PDF back to repo
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "chore(pdf): rebuild CV PDF"
-          file_pattern: assets/Laurin_Huebner_CV.pdf
+      - name: Commit PDF back to repo (best-effort)
+        run: |
+          set -e
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add assets/Laurin_Huebner_CV.pdf || true
+          git commit -m "chore(pdf): rebuild CV PDF" || { echo "No changes to commit"; exit 0; }
+          git push || { echo "⚠️ Konnte nicht pushen (Repo-Setting 'Workflow permissions' evtl. nur Read). PDF ist als Artifact verfügbar."; exit 0; }
