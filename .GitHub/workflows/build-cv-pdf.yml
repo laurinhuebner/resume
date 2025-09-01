@@ -1,0 +1,133 @@
+name: Build CV PDF (Playwright)
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "index.html"
+      - "resume/index.html"
+      - ".github/workflows/build-cv-pdf.yml"
+
+jobs:
+  build-pdf:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # für Commit zurück ins Repo
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Repo-Layout (Debug)
+        run: |
+          echo "::group::Tree"
+          ls -la
+          if [ -d resume ]; then
+            echo "--- resume/ ---"
+            ls -la resume || true
+          fi
+          echo "::endgroup::"
+
+      - name: index.html finden
+        id: locate
+        run: |
+          if [ -f "index.html" ]; then
+            echo "INDEX_PATH=index.html" >> $GITHUB_ENV
+            echo "found=index.html" >> $GITHUB_OUTPUT
+          elif [ -f "resume/index.html" ]; then
+            echo "INDEX_PATH=resume/index.html" >> $GITHUB_ENV
+            echo "found=resume/index.html" >> $GITHUB_OUTPUT
+          else
+            echo "❌ index.html nicht gefunden (weder ./index.html noch ./resume/index.html)."
+            exit 1
+          fi
+          echo "Gefunden: $INDEX_PATH"
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Playwright installieren (inkl. Browser & Deps)
+        run: |
+          npm init -y
+          npm i -D playwright@1.46.1
+          npx playwright install --with-deps chromium
+
+      - name: Export-Script schreiben
+        env:
+          INDEX_PATH: ${{ env.INDEX_PATH }}
+        run: |
+          mkdir -p scripts assets
+          cat > scripts/export-pdf.mjs <<'EOF'
+          import { chromium } from "playwright";
+          import { resolve, dirname, join } from "path";
+          import { fileURLToPath } from "url";
+          import fs from "fs";
+
+          const __filename = fileURLToPath(import.meta.url);
+          const __dirname = dirname(__filename);
+
+          const indexPath = process.env.INDEX_PATH || "index.html";
+          const fileUrl = "file://" + resolve(indexPath);
+          const outDir = resolve("assets");
+          const outPath = join(outDir, "Laurin_Huebner_CV.pdf");
+          if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
+
+          const browser = await chromium.launch({
+            args: [
+              "--no-sandbox",
+              "--disable-setuid-sandbox",
+              "--allow-file-access-from-files",
+              "--disable-web-security",
+            ],
+          });
+
+          try {
+            const context = await browser.newContext({
+              colorScheme: "light",
+            });
+            const page = await context.newPage();
+
+            // Für PDF: Druck-CSS aktivieren & störende Elemente ausblenden
+            await page.emulateMedia({ media: "print" });
+            await page.addStyleTag({ content: `
+              .actions, #themeToggle, #pdfAuto { display: none !important; }
+              /* Externen QR-Fetch im PDF vermeiden */
+              .qrbox img { display: none !important; }
+            `});
+
+            // Laden – nicht auf networkidle warten (externes CDN/QR)
+            await page.goto(fileUrl, { waitUntil: "load", timeout: 120000 });
+
+            await page.pdf({
+              path: outPath,
+              format: "A4",
+              printBackground: true,
+              margin: { top: "10mm", right: "10mm", bottom: "10mm", left: "10mm" },
+            });
+
+            console.log("✅ PDF geschrieben:", outPath);
+          } finally {
+            await browser.close();
+          }
+          EOF
+
+      - name: PDF erzeugen
+        env:
+          INDEX_PATH: ${{ env.INDEX_PATH }}
+        run: node scripts/export-pdf.mjs
+
+      - name: PDF als Artifact hochladen
+        uses: actions/upload-artifact@v4
+        with:
+          name: Laurin_Huebner_CV
+          path: assets/Laurin_Huebner_CV.pdf
+
+      - name: PDF ins Repo committen (Best-Effort)
+        run: |
+          set -e
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add assets/Laurin_Huebner_CV.pdf || true
+          git commit -m "chore(pdf): rebuild CV PDF" || { echo "No changes to commit"; exit 0; }
+          git push || { echo "⚠️ Konnte nicht pushen (Repo-Setting 'Workflow permissions' evtl. nur Read). PDF ist als Artifact verfügbar."; exit 0; }
