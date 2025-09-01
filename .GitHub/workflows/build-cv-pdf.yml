@@ -1,7 +1,16 @@
-name: Build CV PDF (Playwright)
+name: Build CV PDF (Playwright → Commit/PR)
 
 on:
   workflow_dispatch:
+    inputs:
+      target_branch:
+        description: 'Branch für Commit (leer = aktueller Branch)'
+        required: false
+        default: ''
+      index_path:
+        description: 'Pfad zur index.html (z.B. index.html oder resume/index.html)'
+        required: false
+        default: ''
   push:
     paths:
       - "index.html"
@@ -12,60 +21,53 @@ jobs:
   build-pdf:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # für Commit zurück ins Repo
+      contents: write        # für Commit/PR
+      pull-requests: write   # für PR-Erstellung
     steps:
-      - name: Checkout
+      - name: Checkout (volle Historie)
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.inputs.target_branch || github.ref_name }}
 
-      - name: Repo-Layout (Debug)
+      - name: Ermittel Branch & index.html
+        id: setup
         run: |
-          echo "::group::Tree"
-          ls -la
-          if [ -d resume ]; then
-            echo "--- resume/ ---"
-            ls -la resume || true
-          fi
-          echo "::endgroup::"
-
-      - name: index.html finden
-        id: locate
-        run: |
-          if [ -f "index.html" ]; then
-            echo "INDEX_PATH=index.html" >> $GITHUB_ENV
-            echo "found=index.html" >> $GITHUB_OUTPUT
+          BRANCH="${{ github.event.inputs.target_branch || github.ref_name }}"
+          echo "BRANCH=$BRANCH" >> $GITHUB_ENV
+          # index.html finden/setzen
+          if [ -n "${{ github.event.inputs.index_path }}" ]; then
+            IDX="${{ github.event.inputs.index_path }}"
+          elif [ -f "index.html" ]; then
+            IDX="index.html"
           elif [ -f "resume/index.html" ]; then
-            echo "INDEX_PATH=resume/index.html" >> $GITHUB_ENV
-            echo "found=resume/index.html" >> $GITHUB_OUTPUT
+            IDX="resume/index.html"
           else
             echo "❌ index.html nicht gefunden (weder ./index.html noch ./resume/index.html)."
             exit 1
           fi
-          echo "Gefunden: $INDEX_PATH"
+          echo "INDEX_PATH=$IDX" >> $GITHUB_ENV
+          echo "Verwende Branch: $BRANCH"
+          echo "Nutze Datei:    $IDX"
 
-      - name: Setup Node
+      - name: Node einrichten
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: Playwright installieren (inkl. Browser & Deps)
+      - name: Playwright installieren (Chromium + Deps)
         run: |
           npm init -y
           npm i -D playwright@1.46.1
           npx playwright install --with-deps chromium
 
       - name: Export-Script schreiben
-        env:
-          INDEX_PATH: ${{ env.INDEX_PATH }}
         run: |
           mkdir -p scripts assets
           cat > scripts/export-pdf.mjs <<'EOF'
           import { chromium } from "playwright";
-          import { resolve, dirname, join } from "path";
-          import { fileURLToPath } from "url";
+          import { resolve, join } from "path";
           import fs from "fs";
-
-          const __filename = fileURLToPath(import.meta.url);
-          const __dirname = dirname(__filename);
 
           const indexPath = process.env.INDEX_PATH || "index.html";
           const fileUrl = "file://" + resolve(indexPath);
@@ -83,20 +85,16 @@ jobs:
           });
 
           try {
-            const context = await browser.newContext({
-              colorScheme: "light",
-            });
-            const page = await context.newPage();
+            const ctx = await browser.newContext({ colorScheme: "light" });
+            const page = await ctx.newPage();
 
-            // Für PDF: Druck-CSS aktivieren & störende Elemente ausblenden
+            // Für PDF: Druck-CSS + störende UI ausblenden
             await page.emulateMedia({ media: "print" });
             await page.addStyleTag({ content: `
               .actions, #themeToggle, #pdfAuto { display: none !important; }
-              /* Externen QR-Fetch im PDF vermeiden */
-              .qrbox img { display: none !important; }
+              .qrbox img { display: none !important; } /* verhindert externe Fetches im PDF */
             `});
 
-            // Laden – nicht auf networkidle warten (externes CDN/QR)
             await page.goto(fileUrl, { waitUntil: "load", timeout: 120000 });
 
             await page.pdf({
@@ -123,11 +121,27 @@ jobs:
           name: Laurin_Huebner_CV
           path: assets/Laurin_Huebner_CV.pdf
 
-      - name: PDF ins Repo committen (Best-Effort)
+      - name: Versuch: Direkt committen
+        id: commit
+        continue-on-error: true
         run: |
-          set -e
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add assets/Laurin_Huebner_CV.pdf || true
-          git commit -m "chore(pdf): rebuild CV PDF" || { echo "No changes to commit"; exit 0; }
-          git push || { echo "⚠️ Konnte nicht pushen (Repo-Setting 'Workflow permissions' evtl. nur Read). PDF ist als Artifact verfügbar."; exit 0; }
+          if git diff --cached --quiet; then
+            echo "Kein Commit nötig (Datei unverändert)."
+            exit 0
+          fi
+          git commit -m "chore(pdf): rebuild CV PDF"
+          git push origin "${BRANCH}"
+
+      - name: Fallback: Pull-Request erstellen (wenn Push blockiert)
+        if: steps.commit.outcome == 'failure'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "chore(pdf): rebuild CV PDF"
+          branch: pdf-update/${{ github.run_id }}
+          title: "PDF aktualisieren"
+          body: "Automatisch erzeugte PDF hinzugefügt/aktualisiert."
+          add-paths: |
+            assets/Laurin_Huebner_CV.pdf
