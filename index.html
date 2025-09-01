@@ -7,15 +7,23 @@
   <meta name="description" content="Lebenslauf von Laurin Hübner – IT, Automatisierung, Web, Server, KI-Tools.">
   <link rel="icon" href="favicon.ico">
   <style>
+    /* Basis (Dark) + explizite Themes */
     :root{
       --bg:#0d1117; --card:#161b22; --text:#c9d1d9; --muted:#8b949e;
       --accent:#58a6ff; --border:#30363d; --chip:#1f2937;
       --paper:#ffffff; --ink:#111827;
     }
-    :root.light {
+    :root.light{
       --bg:#f6f8fb; --card:#ffffff; --text:#111827; --muted:#6b7280;
       --accent:#2563eb; --border:#e5e7eb; --chip:#eef2f7;
+      --paper:#ffffff; --ink:#111827;
     }
+    :root.dark{
+      --bg:#0d1117; --card:#161b22; --text:#c9d1d9; --muted:#8b949e;
+      --accent:#58a6ff; --border:#30363d; --chip:#1f2937;
+      --paper:#ffffff; --ink:#111827;
+    }
+
     *{box-sizing:border-box}
     html,body{height:100%}
     body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
@@ -23,18 +31,11 @@
     a:hover{text-decoration:underline}
     .wrap{max-width:1000px;margin:0 auto;padding:24px}
     header{display:flex;align-items:center;gap:16px;margin-bottom:16px}
-    .avatar{
-      width:84px;height:84px;border-radius:16px;background:var(--card);
-      border:1px solid var(--border);display:flex;align-items:center;
-      justify-content:center;font-weight:700
-    }
+    .avatar{width:84px;height:84px;border-radius:16px;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:700}
     .title h1{margin:0 0 6px 0;font-size:28px}
     .title .sub{color:var(--muted)}
     .actions{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
-    .btn{
-      border:1px solid var(--border);background:var(--card);color:var(--text);
-      padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:600
-    }
+    .btn{border:1px solid var(--border);background:var(--card);color:var(--text);padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:600}
     .btn.primary{background:var(--accent);border-color:transparent;color:#0b1320}
     .btn.icon{display:inline-flex;align-items:center;gap:8px}
     .grid{display:grid;grid-template-columns:280px 1fr;gap:20px}
@@ -50,23 +51,23 @@
     .cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
     @media(max-width:900px){ .cols{grid-template-columns:1fr} }
     .contact{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
-    .qrbox{
-      width:160px;height:160px;border-radius:12px;border:1px solid var(--border);
-      background:var(--card);display:flex;align-items:center;justify-content:center;overflow:hidden
-    }
+    .qrbox{width:160px;height:160px;border-radius:12px;border:1px solid var(--border);background:var(--card);display:flex;align-items:center;justify-content:center;overflow:hidden}
     .qrbox img{max-width:100%;max-height:100%}
     footer{color:var(--muted);text-align:center;margin:24px 0}
-    /* Print/PDF */
+
+    /* Print/PDF – beste Qualität für System-Druck */
     @media print{
-      body{background:var(--paper);color:var(--ink)}
+      @page { size: A4; margin: 10mm; }
+      body{background:var(--paper);color:var(--ink); -webkit-print-color-adjust: exact; print-color-adjust: exact}
       .wrap{padding:0}
       header, .btn, .actions{display:none !important}
-      .card{border:1px solid #ddd;break-inside:avoid}
+      .card{border:1px solid #ddd;page-break-inside:avoid}
       a{color:#0b61a4}
     }
-    .pagebreak { page-break-before: always; }
-    @media print { .pagebreak { break-before: page; } }
+    .pagebreak{page-break-before:always}
+    @media print{ .pagebreak{break-before:page} }
   </style>
+  <!-- html2pdf.js als Fallback/Alternative -->
   <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
 </head>
 <body>
@@ -94,9 +95,9 @@
             <div>
               <div>📍 Upstalsboomstraße 4, 26721 Emden</div>
               <div>✉️ <a href="mailto:bewerbung@huebner.business">bewerbung@huebner.business</a></div>
-              <div>🌐 <a href="https://laurinhuebner.github.io/resume/" target="_blank">laurinhuebner.github.io/resume</a></div>
-              <div>💼 <a href="https://github.com/laurinhuebner" target="_blank">github.com/laurinhuebner</a></div>
-              <div style="margin-top:8px"><a class="btn primary" href="card.html" target="_blank">Visitenkarte</a></div>
+              <div>🌐 <a href="https://laurinhuebner.github.io/resume/" target="_blank" rel="noopener">laurinhuebner.github.io/resume</a></div>
+              <div>💼 <a href="https://github.com/laurinhuebner" target="_blank" rel="noopener">github.com/laurinhuebner</a></div>
+              <div style="margin-top:8px"><a class="btn primary" href="card.html" target="_blank" rel="noopener">Visitenkarte</a></div>
             </div>
             <div class="qrbox">
               <a href="card.html"><img alt="QR" src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=https%3A%2F%2Flaurinhuebner.github.io%2Fresume%2Fcard.html"></a>
@@ -123,8 +124,8 @@
         <div class="card">
           <h2>Zertifikate</h2>
           <ul class="list">
-            <li class="item"><h3>IT-Grundlagen & Linux (Eigenstudium)</h3><div class="meta">2024–2025</div></li>
-            <li class="item"><h3>Git & GitHub (Eigenstudium)</h3><div class="meta">Workflows, Actions, Pages</div></li>
+            <li class="item"><h3>IT-Grundlagen & Linux (Eigenstudium)</h3><div class="meta">2024–2025 · Server, Dienste, Systemd, SSH</div></li>
+            <li class="item"><h3>Git & GitHub (Eigenstudium)</h3><div class="meta">Workflows, Actions, GitHub Pages</div></li>
           </ul>
         </div>
       </aside>
@@ -134,34 +135,62 @@
         <div class="card">
           <h2>Über mich</h2>
           <p>Ich bin begeisterter IT-Anwender mit Fokus auf <strong>Linux-Servern, Python & Automatisierung</strong>.  
-             Zuhause betreibe ich einen eigenen <strong>Home-Server</strong> und setze Projekte um, die praktische Probleme lösen – von Web-Dashboards bis Bewerbungs-Automatisierung.</p>
+             Zuhause betreibe ich einen eigenen <strong>Home-Server</strong> (Services, Monitoring, Netzwerktools) und setze Projekte um, die praktische Probleme lösen – von Web-Dashboards bis zu Bewerbungs-Automatisierung.</p>
         </div>
 
-        <div class="card">
-          <h2>Projekte</h2>
+        <div class="card" id="projects">
+          <h2>Projekte (Auswahl)</h2>
           <ul class="list">
-            <li class="item"><h3>Server-Dashboard</h3><div class="meta">Debian · Monitoring · Docker · Dienste</div></li>
-            <li class="item"><h3>LAN-Scanner</h3><div class="meta">Subnetzscan, SQLite, ins Dashboard integriert</div></li>
-            <li class="item"><h3>ads2letter</h3><div class="meta">KI-Tool für Bewerbungsanschreiben</div></li>
-            <li class="item"><h3>ads2letter-WebApp</h3><div class="meta">APK für Android im Heimnetz</div></li>
-            <li class="item"><h3>Lebenslauf Online</h3><div class="meta">Interaktive CV-Seite auf GitHub Pages</div></li>
+            <li class="item">
+              <h3>Server-Dashboard</h3>
+              <div class="meta">Web-Dashboard auf Debian mit System- & Netzwerk-Monitoring, Docker-Übersicht, Log-Tail, Dienste-Status</div>
+              <div><a href="https://github.com/laurinhuebner/server-dashboard" target="_blank" rel="noopener">Code ansehen</a></div>
+            </li>
+            <li class="item">
+              <h3>LAN-Scanner</h3>
+              <div class="meta">Subnetz-Scan (Hosts, Standard-Ports), Reverse-DNS, SQLite-Persistenz; ins Dashboard eingebettet</div>
+              <div><a href="https://github.com/laurinhuebner/lan-scanner" target="_blank" rel="noopener">Code ansehen</a></div>
+            </li>
+            <li class="item">
+              <h3>ads2letter</h3>
+              <div class="meta">KI-gestütztes Tool, das Jobausschreibungen in individuelle Bewerbungsanschreiben umwandelt</div>
+              <div><a href="https://github.com/laurinhuebner/ads2letter" target="_blank" rel="noopener">Code ansehen</a></div>
+            </li>
+            <li class="item">
+              <h3>ads2letter-WebApp (Android)</h3>
+              <div class="meta">Einfache APK, um ads2letter im Heimnetz komfortabel ohne Browser zu nutzen</div>
+              <div><a href="https://github.com/laurinhuebner/ads2letter-webapp" target="_blank" rel="noopener">Code ansehen</a></div>
+            </li>
+            <li class="item">
+              <h3>Lebenslauf Online</h3>
+              <div class="meta">Interaktive CV-Seite auf GitHub Pages mit QR-Code-Visitenkarte</div>
+              <div><a href="https://laurinhuebner.github.io/resume/" target="_blank" rel="noopener">Online ansehen</a> · <a href="https://github.com/laurinhuebner/resume" target="_blank" rel="noopener">Code</a></div>
+            </li>
           </ul>
         </div>
 
         <div class="card">
           <h2>Berufserfahrung</h2>
           <ul class="list">
-            <li class="item"><h3>Verkäufer – Fressnapf</h3><div class="meta">03/2022 – 07/2022</div></li>
-            <li class="item"><h3>Verkäufer – Dehner</h3><div class="meta">05/2021 – 08/2021</div></li>
+            <li class="item">
+              <h3>Verkäufer – Fressnapf Holding SE</h3>
+              <div class="meta">01.03.2022 – 27.07.2022</div>
+              <p class="muted">Kassieren (Scannerkassen), Kassenabschluss/-kontrolle, Qualitätssicherung, Ware pflegen/präsentieren/verräumen, Verkauf & Kundenberatung, Umsetzung von Aktionen & Werbemaßnahmen.</p>
+            </li>
+            <li class="item">
+              <h3>Verkäufer – Dehner Gartencenter GmbH & Co. KG</h3>
+              <div class="meta">15.05.2021 – 31.08.2021</div>
+              <p class="muted">Auszeichnen & Verräumen der Waren, Kassiertätigkeit.</p>
+            </li>
           </ul>
         </div>
 
         <div class="card">
           <h2>Bildung</h2>
           <ul class="list">
-            <li class="item"><h3>Lidl Abiturientenprogramm</h3><div class="meta">08/2022 – 10/2022</div></li>
-            <li class="item"><h3>Hochschule Ludwigsburg – Steuerverwaltung</h3><div class="meta">10/2021 – 02/2022</div></li>
-            <li class="item"><h3>IB Berufliche Schulen Stuttgart – Fachhochschulreife (1,4)</h3><div class="meta">09/2019 – 07/2021</div></li>
+            <li class="item"><h3>Lidl Vertriebs-GmbH & Co. KG – Abiturientenprogramm Vertrieb</h3><div class="meta">01.08.2022 – 31.10.2022</div></li>
+            <li class="item"><h3>Hochschule f. öffentliche Verwaltung & Finanzen Ludwigsburg – Steuerverwaltung (LL.B.)</h3><div class="meta">01.10.2021 – 28.02.2022</div></li>
+            <li class="item"><h3>IB Berufliche Schulen Stuttgart-Mitte – Fachhochschulreife (1,4)</h3><div class="meta">09.2019 – 07.2021</div></li>
           </ul>
         </div>
       </section>
@@ -174,37 +203,63 @@
     // Jahr
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Theme Toggle
+    // Theme Toggle mit Speicher
     const root = document.documentElement;
-    const btn = document.getElementById('themeToggle');
+    const btn  = document.getElementById('themeToggle');
     let theme = localStorage.getItem('theme');
-    if (!theme) {
-      theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
+    if (!theme) theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     root.classList.add(theme);
     btn.textContent = theme === 'dark' ? '☀️' : '🌙';
-
     btn.addEventListener('click', () => {
       const isDark = root.classList.contains('dark');
-      root.classList.remove(isDark ? 'dark' : 'light');
-      root.classList.add(isDark ? 'light' : 'dark');
-      localStorage.setItem('theme', isDark ? 'light' : 'dark');
-      btn.textContent = isDark ? '🌙' : '☀️';
+      root.classList.toggle('dark', !isDark);
+      root.classList.toggle('light', isDark);
+      const next = isDark ? 'light' : 'dark';
+      localStorage.setItem('theme', next);
+      btn.textContent = next === 'dark' ? '☀️' : '🌙';
     });
 
-    // PDF Export mit html2pdf.js
+    // html2pdf: höher aufgelöstes Fallback (Bitmap)
     document.getElementById('pdfAuto').addEventListener('click', () => {
       const cv = document.querySelector('.wrap');
-      const opt = {
+      html2pdf().set({
         margin: [10,10,10,10],
         filename: 'Laurin_Huebner_CV.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        image: { type: 'jpeg', quality: 1 },
+        html2canvas: {
+          scale: 3,                 // höhere Auflösung
+          useCORS: true,
+          letterRendering: true,
+          backgroundColor: '#ffffff',
+          windowWidth: 1000         // entspricht Layout-Breite
+        },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true },
         pagebreak: { mode: ['css','legacy'] }
-      };
-      html2pdf().set(opt).from(cv).save();
+      }).from(cv).save();
     });
+  </script>
+
+  <!-- Strukturierte Daten -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Person",
+    "name":"Laurin Hübner",
+    "email":"mailto:bewerbung@huebner.business",
+    "url":"https://laurinhuebner.github.io/resume/",
+    "address":{
+      "@type":"PostalAddress",
+      "streetAddress":"Upstalsboomstraße 4",
+      "postalCode":"26721",
+      "addressLocality":"Emden",
+      "addressCountry":"DE"
+    },
+    "sameAs":[ "https://github.com/laurinhuebner" ],
+    "knowsAbout":[
+      "Linux (Debian)", "Python", "Flask", "GitHub", "GitHub Actions",
+      "Systemd", "WireGuard", "Networking", "Automation", "Web Development"
+    ]
+  }
   </script>
 </body>
 </html>
