@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>Lebenslauf – Laurin Hübner</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Lebenslauf von Laurin Hübner – IT, Automatisierung, Web, Server, KI-Tools.">
+  <meta name="description" content="Lebenslauf von Laurin Hübner – Ausbildung Fachinformatiker Systemintegration · Linux · Automatisierung · Server · KI-Tools.">
   <link rel="icon" href="favicon.ico">
   <style>
     :root{
@@ -21,18 +21,12 @@
     a{color:var(--accent);text-decoration:none}
     a:hover{text-decoration:underline}
     .wrap{max-width:1000px;margin:0 auto;padding:24px}
-    header{
-      display:flex;align-items:center;gap:16px;margin-bottom:16px
-    }
-    .avatar{
-      width:84px;height:84px;border-radius:16px;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:700
-    }
+    header{display:flex;align-items:center;gap:16px;margin-bottom:16px}
+    .avatar{width:84px;height:84px;border-radius:16px;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:700}
     .title h1{margin:0 0 6px 0;font-size:28px}
     .title .sub{color:var(--muted)}
     .actions{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
-    .btn{
-      border:1px solid var(--border);background:var(--card);color:var(--text);padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:600
-    }
+    .btn{border:1px solid var(--border);background:var(--card);color:var(--text);padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:600}
     .btn.primary{background:var(--accent);border-color:transparent;color:#0b1320}
     .btn.icon{display:inline-flex;align-items:center;gap:8px}
     .grid{display:grid;grid-template-columns:280px 1fr;gap:20px}
@@ -48,12 +42,9 @@
     .cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
     @media(max-width:900px){ .cols{grid-template-columns:1fr} }
     .contact{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
-    .qrbox{
-      width:160px;height:160px;border-radius:12px;border:1px solid var(--border);background:var(--card);display:flex;align-items:center;justify-content:center;overflow:hidden
-    }
-    .qrbox img, .qrbox svg, .qrbox canvas{max-width:100%;max-height:100%}
+    .qrbox{width:160px;height:160px;border-radius:12px;border:1px solid var(--border);background:var(--card);display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .qrbox img{max-width:100%;max-height:100%}
     footer{color:var(--muted);text-align:center;margin:24px 0}
-    /* Print/PDF */
     @media print{
       body{background:var(--paper);color:var(--ink)}
       .wrap{padding:0}
@@ -69,11 +60,10 @@
       <div class="avatar">LH</div>
       <div class="title">
         <h1>Laurin Hübner</h1>
-        <div class="sub">IT-interessiert · Linux & Python · Automatisierung & Server</div>
+        <div class="sub">Ziel: Ausbildung Fachinformatiker Systemintegration</div>
       </div>
       <div class="actions">
         <a class="btn icon" href="mailto:bewerbung@huebner.business" title="E-Mail senden">✉️ E-Mail</a>
-        <a class="btn icon" href="tel:+49" title="Anrufen">📞 Anrufen</a>
         <button class="btn" onclick="window.print()">PDF herunterladen</button>
         <button class="btn icon" id="themeToggle" title="Theme umschalten">🌙</button>
       </div>
@@ -93,9 +83,6 @@
               <div style="margin-top:8px"><a class="btn primary" href="card.html" target="_blank" rel="noopener">Visitenkarte öffnen</a></div>
             </div>
             <div class="qrbox">
-              <!-- 🔳 Optional: Deinen bestehenden Inline-QR hier einfügen (ersetzt den Fallback).
-                   Beispiel: <svg>…</svg> oder <canvas id="qr"></canvas> -->
-              <!-- Fallback: minimalistisches QR-Label -->
               <a href="card.html" title="Visitenkarte">
                 <img alt="QR zur Visitenkarte" src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=https%3A%2F%2Flaurinhuebner.github.io%2Fresume%2Fcard.html">
               </a>
@@ -107,30 +94,29 @@
           <h2>Skills</h2>
           <div class="chips">
             <span class="chip">Linux (Debian)</span>
+            <span class="chip">Systemd · SSH · Dienste</span>
             <span class="chip">Python · Flask</span>
-            <span class="chip">Git & GitHub</span>
-            <span class="chip">GitHub Actions</span>
-            <span class="chip">Systemd Services</span>
+            <span class="chip">HTML & CSS</span>
             <span class="chip">Netzwerkgrundlagen</span>
             <span class="chip">WireGuard</span>
-            <span class="chip">HTML & CSS</span>
+            <span class="chip">Git & GitHub</span>
+            <span class="chip">GitHub Actions</span>
             <span class="chip">Automatisierung</span>
             <span class="chip">Home-Server</span>
           </div>
         </div>
 
         <div class="card">
-          <h2>Zertifikate</h2>
+          <h2>Praxisprojekte & Selbststudium</h2>
           <ul class="list">
             <li class="item">
-              <h3>IT-Grundlagen & Linux (Eigenstudium)</h3>
+              <h3>IT-Grundlagen & Linux</h3>
               <div class="meta">2024–2025 · Server, Dienste, Systemd, SSH</div>
             </li>
             <li class="item">
-              <h3>Git & GitHub (Eigenstudium)</h3>
+              <h3>Git & GitHub</h3>
               <div class="meta">Workflows, Actions, GitHub Pages</div>
             </li>
-            <!-- Wenn du offizielle Zertifikate hast, hier ergänzen -->
           </ul>
         </div>
       </aside>
@@ -139,8 +125,9 @@
       <section>
         <div class="card">
           <h2>Über mich</h2>
-          <p>Ich bin begeisterter IT-Anwender mit Fokus auf <strong>Linux-Servern, Python & Automatisierung</strong>.  
-             Zuhause betreibe ich einen eigenen <strong>Home-Server</strong> (Services, Monitoring, Netzwerktools) und setze Projekte um, die praktische Probleme lösen – von Web-Dashboards bis zu Bewerbungs-Automatisierung.</p>
+          <p>Ich bin ein engagierter IT-Anwender mit dem Ziel, eine <strong>Ausbildung als Fachinformatiker für Systemintegration</strong> zu absolvieren.  
+             Besonders interessiere ich mich für <strong>Linux-Server, Netzwerke und Automatisierung mit Python</strong>.  
+             Zuhause betreibe ich einen eigenen <strong>Home-Server</strong> mit Monitoring, Netzwerktools und Web-Diensten und setze Projekte um, die praktische Probleme lösen – von Dashboards bis zu Bewerbungs-Automatisierung.</p>
         </div>
 
         <div class="card" id="projects">
@@ -153,17 +140,17 @@
             </li>
             <li class="item">
               <h3>LAN-Scanner</h3>
-              <div class="meta">Subnetz-Scan (Hosts, Standard-Ports), Reverse-DNS, SQLite-Persistenz; ins Dashboard eingebettet</div>
+              <div class="meta">Subnetz-Scan mit SQLite-Persistenz; ins Dashboard eingebettet</div>
               <div><a href="https://github.com/laurinhuebner/lan-scanner" target="_blank" rel="noopener">Code ansehen</a></div>
             </li>
             <li class="item">
               <h3>ads2letter</h3>
-              <div class="meta">KI-gestütztes Tool, das Jobausschreibungen in individuelle Bewerbungsanschreiben umwandelt</div>
+              <div class="meta">KI-gestütztes Tool, das Jobausschreibungen in Bewerbungsanschreiben umwandelt</div>
               <div><a href="https://github.com/laurinhuebner/ads2letter" target="_blank" rel="noopener">Code ansehen</a></div>
             </li>
             <li class="item">
               <h3>ads2letter-WebApp (Android)</h3>
-              <div class="meta">Einfache APK, um ads2letter im Heimnetz komfortabel ohne Browser zu nutzen</div>
+              <div class="meta">Einfache APK, um ads2letter im Heimnetz ohne Browser zu nutzen</div>
               <div><a href="https://github.com/laurinhuebner/ads2letter-webapp" target="_blank" rel="noopener">Code ansehen</a></div>
             </li>
             <li class="item">
@@ -180,12 +167,12 @@
             <li class="item">
               <h3>Verkäufer – Fressnapf Holding SE</h3>
               <div class="meta">01.03.2022 – 27.07.2022</div>
-              <p class="muted">Kassieren (Scannerkassen), Kassenabschluss/-kontrolle, Qualitätssicherung, Ware pflegen/präsentieren/verräumen, Verkauf & Kundenberatung, Umsetzung von Aktionen & Werbemaßnahmen.</p>
+              <p class="muted">Kassieren, Kassenabschluss, Qualitätssicherung, Warenpflege, Verkauf & Beratung, Umsetzung von Aktionen.</p>
             </li>
             <li class="item">
               <h3>Verkäufer – Dehner Gartencenter GmbH & Co. KG</h3>
               <div class="meta">15.05.2021 – 31.08.2021</div>
-              <p class="muted">Auszeichnen & Verräumen der Waren, Kassiertätigkeit.</p>
+              <p class="muted">Warenverräumung & Kassiertätigkeit.</p>
             </li>
           </ul>
         </div>
@@ -210,14 +197,11 @@
       </section>
     </div>
 
-    <footer>© <span id="year"></span> Laurin Hübner · Diese Seite ist für Ausdruck/PDF optimiert</footer>
+    <footer>© <span id="year"></span> Laurin Hübner · Ziel: Ausbildung Fachinformatiker Systemintegration</footer>
   </div>
 
   <script>
-    // Jahr
     document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Theme Toggle
     const root = document.documentElement;
     const btn = document.getElementById('themeToggle');
     const pref = localStorage.getItem('theme');
@@ -230,13 +214,8 @@
       localStorage.setItem('theme', dark ? 'dark' : 'light');
       btn.textContent = dark ? '☀️' : '🌙';
     });
-
-    // Optional: Wenn du bereits ein Inline-QR-Script verwendest, kannst du es hier initialisieren.
-    // Beispiel-Hook:
-    // generateQR('card.html', document.querySelector('.qrbox'));
   </script>
 
-  <!-- Strukturierte Daten für bessere Darstellung in Suchmaschinen -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -257,7 +236,8 @@
     "knowsAbout":[
       "Linux (Debian)", "Python", "Flask", "GitHub", "GitHub Actions",
       "Systemd", "WireGuard", "Networking", "Automation", "Web Development"
-    ]
+    ],
+    "jobTitle":"Ausbildung Fachinformatiker Systemintegration (angestrebt)"
   }
   </script>
 </body>
