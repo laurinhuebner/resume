@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CV als PDF speichern – Laurin Hübner</title>
+  <style>
+    body{font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;margin:24px;line-height:1.5}
+    .box{max-width:720px;margin:auto}
+    .log{white-space:pre-wrap;background:#0b1220;color:#e5e7eb;padding:12px;border-radius:10px}
+    button{padding:10px 14px;border-radius:10px;border:0;background:#2563eb;color:#fff;font-weight:600}
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+  <div class="box">
+    <h1>PDF-Export deines Lebenslaufs</h1>
+    <p>Tippe auf „PDF erstellen“ – die Seite lädt deine <code>index.html</code> und speichert eine Datei
+      <b>Laurin_Huebner_CV.pdf</b> lokal auf deinem Gerät.</p>
+    <p><button id="go">PDF erstellen</button></p>
+    <div id="out" class="log" style="display:none"></div>
+  </div>
+
+  <script>
+    const log = (m)=>{const o=document.getElementById('out');o.style.display='block';o.textContent+=m+"\n";}
+    async function makePdf(){
+      try{
+        log("Lade index.html…");
+        const res = await fetch('index.html', {cache:'no-cache'});
+        const html = await res.text();
+        const wrapper = document.createElement('div');
+        wrapper.innerHTML = html;
+
+        // Optional: störende UI für PDF ausblenden
+        const hide = wrapper.querySelector('.actions');
+        if (hide) hide.style.display = 'none';
+
+        log("Rendere PDF…");
+        await html2pdf().set({
+          margin:[10,10,10,10],
+          filename:'Laurin_Huebner_CV.pdf',
+          image:{ type:'jpeg', quality:0.98 },
+          html2canvas:{ scale:2, useCORS:true },
+          jsPDF:{ unit:'mm', format:'a4', orientation:'portrait' },
+          pagebreak:{ mode:['css','legacy'] }
+        }).from(wrapper).save();
+
+        log("✅ Fertig. Die PDF wurde gespeichert.");
+      }catch(e){
+        log("❌ Fehler: "+e);
+      }
+    }
+    document.getElementById('go').addEventListener('click', makePdf);
+  </script>
+</body>
+</html>
