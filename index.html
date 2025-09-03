@@ -18,66 +18,33 @@
       --accent:#2563eb; --border:#e5e7eb; --chip:#eef2f7;
       --paper:#ffffff; --ink:#111827;
     }
-    :root.dark{
-      --bg:#0d1117; --card:#161b22; --text:#c9d1d9; --muted:#8b949e;
-      --accent:#58a6ff; --border:#30363d; --chip:#1f2937;
-      --paper:#ffffff; --ink:#111827;
-    }
 
-    /* ===== Layout & Komponenten ===== */
     *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      background:var(--bg); color:var(--text);
-      -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
-    }
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+         background:var(--bg);color:var(--text);}
     a{color:var(--accent);text-decoration:none}
-    a:hover{text-decoration:underline}
     .wrap{max-width:1000px;margin:0 auto;padding:24px}
     header{display:flex;align-items:center;gap:16px;margin-bottom:16px}
-    .avatar{width:84px;height:84px;border-radius:16px;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:700}
-    .title h1{margin:0 0 6px 0;font-size:28px}
+    .avatar{width:84px;height:84px;border-radius:16px;background:var(--card);
+            border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:700}
+    .title h1{margin:0;font-size:28px}
     .title .sub{color:var(--muted)}
-    .actions{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
-    .btn{border:1px solid var(--border);background:var(--card);color:var(--text);padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:600}
+    .actions{margin-left:auto;display:flex;gap:8px}
+    .btn{border:1px solid var(--border);background:var(--card);color:var(--text);
+         padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:600}
     .btn.primary{background:var(--accent);border-color:transparent;color:#0b1320}
-    .btn.icon{display:inline-flex;align-items:center;gap:8px}
-
-    /* 2 Spalten am Screen */
     .grid{display:grid;grid-template-columns:280px 1fr;gap:20px}
-    @media(max-width:900px){ .grid{grid-template-columns:1fr} .actions{margin:0} }
-
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
     .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px}
-    h2{margin:0 0 12px 0;font-size:20px}
-    p{margin:0 0 8px; line-height:1.5}
-    .muted{color:var(--muted)}
+    h2{margin:0 0 12px;font-size:20px}
     .list{display:flex;flex-direction:column;gap:12px}
-    .item h3{margin:0 0 4px 0;font-size:16px}
+    .item h3{margin:0;font-size:16px}
     .item .meta{color:var(--muted);font-size:14px}
     .chips{display:flex;flex-wrap:wrap;gap:8px}
-    .chip{background:var(--chip);border:1px solid var(--border);padding:6px 10px;border-radius:999px;font-size:13px}
-    .cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    @media(max-width:900px){ .cols{grid-template-columns:1fr} }
-    .contact{display:grid;grid-template-columns:1fr;gap:6px}
+    .chip{background:var(--chip);border:1px solid var(--border);
+          padding:6px 10px;border-radius:999px;font-size:13px}
     footer{color:var(--muted);text-align:center;margin:24px 0}
-
-    /* ===== Print/PDF: einspaltig, A4, Farbtreue ===== */
-    @media print{
-      @page { size: A4; margin: 10mm; }
-      body{background:var(--paper);color:var(--ink); -webkit-print-color-adjust: exact; print-color-adjust: exact}
-      .wrap{max-width:700px;padding:0} /* schmaler für A4-Textbreite */
-      header, .btn, .actions{display:none !important}
-      .grid{display:block}
-      .cols{display:block}
-      .card{border:1px solid #ddd;page-break-inside:avoid;margin-bottom:14px}
-      a{color:#0b61a4}
-    }
   </style>
-
-  <!-- html2pdf.js als Alternative (Bitmap) -->
-  <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
 </head>
 <body>
   <div class="wrap">
@@ -85,54 +52,30 @@
       <div class="avatar">LH</div>
       <div class="title">
         <h1>Laurin Hübner</h1>
-        <div class="sub">Ziel: Ausbildung Fachinformatiker Systemintegration</div>
+        <div class="sub">Fokus: IT, Automatisierung & Fachinformatik</div>
       </div>
       <div class="actions">
-        <a class="btn icon" href="mailto:mail@huebner.business">✉️ E-Mail</a>
-        <button class="btn" onclick="window.print()">PDF drucken</button>
-        <button class="btn" id="pdfAuto">PDF speichern</button>
-        <button class="btn icon" id="themeToggle">🌙</button>
+        <a class="btn" href="mailto:bewerbung@huebner.business">E-Mail</a>
+        <a class="btn" href="https://github.com/laurinhuebner" target="_blank">GitHub</a>
+        <a class="btn" href="https://laurinhuebner.github.io/resume/" target="_blank">Online CV</a>
       </div>
     </header>
 
     <div class="grid">
       <!-- Linke Spalte -->
-      <aside class="cols">
+      <aside>
         <div class="card">
-          <h2>Kontakt</h2>
-          <div class="contact">
-            <div>📍 Upstalsboomstraße 4, 26721 Emden</div>
-            <div>📞 +49 176 62352304</div>
-            <div>✉️ <a href="mailto:mail@huebner.business">mail@huebner.business</a></div>
-            <div>🌐 <a href="https://laurinhuebner.github.io/resume/" target="_blank" rel="noopener">laurinhuebner.github.io/resume</a></div>
-            <div>💼 <a href="https://github.com/laurinhuebner" target="_blank" rel="noopener">github.com/laurinhuebner</a></div>
-            <div class="muted" style="margin-top:6px">Geboren am 25.06.1999 in Stuttgart</div>
-          </div>
-        </div>
-
-        <div class="card">
-          <h2>Skills (Technik)</h2>
+          <h2>Skills</h2>
           <div class="chips">
             <span class="chip">Linux (Debian)</span>
             <span class="chip">Python · Flask</span>
             <span class="chip">Git & GitHub</span>
-            <span class="chip">GitHub Actions</span>
             <span class="chip">Systemd Services</span>
-            <span class="chip">Netzwerkgrundlagen</span>
+            <span class="chip">Netzwerk</span>
             <span class="chip">WireGuard</span>
             <span class="chip">HTML & CSS</span>
             <span class="chip">Automatisierung</span>
-            <span class="chip">Home-Server</span>
           </div>
-        </div>
-
-        <div class="card">
-          <h2>Qualifikationen</h2>
-          <ul class="list">
-            <li class="item"><div class="meta">Microsoft Word, Google Docs, Adobe Photoshop, Microsoft NAV Dynamics</div></li>
-            <li class="item"><div class="meta">Anpassungsfähigkeit, Überzeugungskraft, Analytisches Denken, Planungsstärke</div></li>
-            <li class="item"><div class="meta">Konfliktfähigkeit, Integrität, Team- & Kritikfähigkeit, Kommunikation</div></li>
-          </ul>
         </div>
 
         <div class="card">
@@ -148,137 +91,35 @@
       <section>
         <div class="card">
           <h2>Über mich</h2>
-          <p>Ich bin begeisterter IT-Anwender mit Fokus auf <strong>Linux-Servern, Python & Automatisierung</strong>. Zuhause betreibe ich einen eigenen <strong>Home-Server</strong> (Services, Monitoring, Netzwerktools) und setze Projekte um, die praktische Probleme lösen – von Web-Dashboards bis zu Bewerbungs-Automatisierung.</p>
-        </div>
-
-        <div class="card" id="projects">
-          <h2>Projekte (Auswahl)</h2>
-          <ul class="list">
-            <li class="item">
-              <h3>Server-Dashboard</h3>
-              <div class="meta">Web-Dashboard auf Debian mit System- & Netzwerk-Monitoring, Docker-Übersicht, Log-Tail, Dienste-Status</div>
-              <div><a href="https://github.com/laurinhuebner/server-dashboard" target="_blank" rel="noopener">Code ansehen</a></div>
-            </li>
-            <li class="item">
-              <h3>LAN-Scanner</h3>
-              <div class="meta">Subnetz-Scan (Hosts, Standard-Ports), Reverse-DNS, SQLite-Persistenz; ins Dashboard eingebettet</div>
-              <div><a href="https://github.com/laurinhuebner/lan-scanner" target="_blank" rel="noopener">Code ansehen</a></div>
-            </li>
-            <li class="item">
-              <h3>ads2letter</h3>
-              <div class="meta">KI-gestütztes Tool, das Jobausschreibungen in individuelle Bewerbungsanschreiben umwandelt</div>
-              <div><a href="https://github.com/laurinhuebner/ads2letter" target="_blank" rel="noopener">Code ansehen</a></div>
-            </li>
-            <li class="item">
-              <h3>ads2letter-WebApp (Android)</h3>
-              <div class="meta">Einfache APK, um ads2letter im Heimnetz komfortabel ohne Browser zu nutzen</div>
-              <div><a href="https://github.com/laurinhuebner/ads2letter-webapp" target="_blank" rel="noopener">Code ansehen</a></div>
-            </li>
-            <li class="item">
-              <h3>Lebenslauf Online</h3>
-              <div class="meta">Interaktive CV-Seite auf GitHub Pages</div>
-              <div><a href="https://laurinhuebner.github.io/resume/" target="_blank" rel="noopener">Online ansehen</a> · <a href="https://github.com/laurinhuebner/resume" target="_blank" rel="noopener">Code</a></div>
-            </li>
-          </ul>
+          <p>Begeisterter IT-Anwender mit Schwerpunkt auf <strong>Linux, Netzwerken und Automatisierung</strong>.  
+             Ich entwickle praxisnahe Tools wie Dashboards, Scanner und Bewerbungs-Automatisierungen, um alltägliche Prozesse effizienter zu gestalten.</p>
         </div>
 
         <div class="card">
-          <h2>Berufserfahrung</h2>
+          <h2>Projekte</h2>
           <ul class="list">
-            <li class="item">
-              <h3>Verkäufer – Fressnapf Holding SE, Stuttgart</h3>
-              <div class="meta">03/2022 – 07/2022</div>
-              <p class="muted">Kassieren an Scannerkassen, Kassenabschluss/-kontrolle, Qualitätssicherung, Pflege/Präsentation/Verräumung der Ware, Verkauf & Kundenberatung, Umsetzung von Werbemaßnahmen.</p>
-            </li>
-            <li class="item">
-              <h3>Verkäufer – Dehner Gartencenter GmbH & Co. KG, Göppingen</h3>
-              <div class="meta">05/2021 – 08/2021</div>
-              <p class="muted">Mithilfe beim Auszeichnen und Verräumen der Waren, Kassiertätigkeit.</p>
-            </li>
+            <li class="item"><h3>Server-Dashboard</h3><div class="meta">System- & Netzwerk-Monitoring auf Debian</div></li>
+            <li class="item"><h3>LAN-Scanner</h3><div class="meta">Subnetz-Scan mit Portprüfung & SQLite-DB</div></li>
+            <li class="item"><h3>ads2letter</h3><div class="meta">KI-gestützte Bewerbungstexte</div></li>
+            <li class="item"><h3>Audio-Transcriber-App</h3><div class="meta">WebApp & Android APK zur Spracherkennung</div></li>
+            <li class="item"><h3>Lebenslauf Online</h3><div class="meta">Interaktive CV-Seite mit GitHub Pages</div></li>
           </ul>
         </div>
 
         <div class="card">
           <h2>Bildung</h2>
           <ul class="list">
-            <li class="item"><h3>Abiturientenprogramm Vertrieb – Lidl Vertriebs-GmbH & Co. KG, Kirchheim</h3><div class="meta">08/2022 – 10/2022</div></li>
-            <li class="item"><h3>Studium Steuerverwaltung – Hochschule f. öffentliche Verwaltung & Finanzen Ludwigsburg</h3><div class="meta">10/2021 – 02/2022</div></li>
-            <li class="item"><h3>Fachhochschulreife (Note 1,4) – IB Berufliche Schulen Stuttgart-Mitte</h3><div class="meta">09/2019 – 07/2021</div></li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <h2>Weiterbildungen</h2>
-          <ul class="list">
-            <li class="item"><h3>„Das liebe Geld – Finance im Alltag“ – University of Zurich</h3><div class="meta">05/2022</div></li>
+            <li class="item"><h3>Fachhochschulreife</h3><div class="meta">Note 1,4 – Stuttgart, 2021</div></li>
           </ul>
         </div>
       </section>
     </div>
 
-    <footer>© <span id="year"></span> Laurin Hübner · Ausdruck/PDF optimiert</footer>
+    <footer>© <span id="year"></span> Laurin Hübner · GitHub Showcase</footer>
   </div>
 
   <script>
-    // Jahr
     document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Theme Toggle mit Speicherung
-    const root = document.documentElement;
-    const btn  = document.getElementById('themeToggle');
-    let theme = localStorage.getItem('theme');
-    if (!theme) theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    root.classList.add(theme);
-    btn.textContent = theme === 'dark' ? '☀️' : '🌙';
-    btn.addEventListener('click', () => {
-      const isDark = root.classList.contains('dark');
-      root.classList.toggle('dark', !isDark);
-      root.classList.toggle('light', isDark);
-      const next = isDark ? 'light' : 'dark';
-      localStorage.setItem('theme', next);
-      btn.textContent = next === 'dark' ? '☀️' : '🌙';
-    });
-
-    // html2pdf: auf A4 optimiert (Bitmap). Einspaltiges Layout wird bereits per @media print erzwungen.
-    document.getElementById('pdfAuto').addEventListener('click', () => {
-      const cv = document.querySelector('.wrap');
-      html2pdf().set({
-        margin: [10,10,10,10],
-        filename: 'Laurin_Huebner_CV.pdf',
-        image: { type: 'jpeg', quality: 1 },
-        html2canvas: {
-          scale: 2,                 // ausreichend scharf & stabil
-          useCORS: true,
-          letterRendering: false,   // verhindert Spacing-Artefakte
-          backgroundColor: '#ffffff',
-          windowWidth: 700          // an Print-Breite angepasst
-        },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true },
-        pagebreak: { mode: ['css','legacy'] }
-      }).from(cv).save();
-    });
-  </script>
-
-  <!-- Strukturierte Daten -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"Person",
-    "name":"Laurin Hübner",
-    "email":"mailto:mail@huebner.business",
-    "telephone":"+49 176 62352304",
-    "birthDate":"1999-06-25",
-    "birthPlace":"Stuttgart, Germany",
-    "url":"https://laurinhuebner.github.io/resume/",
-    "address":{
-      "@type":"PostalAddress",
-      "streetAddress":"Upstalsboomstraße 4",
-      "postalCode":"26721",
-      "addressLocality":"Emden",
-      "addressCountry":"DE"
-    },
-    "sameAs":["https://github.com/laurinhuebner"]
-  }
   </script>
 </body>
 </html>
